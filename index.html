@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Alex Hopkins</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+
+		</style>
+	</head>
+	<body>
+
+		<div id="container"></div>
+
+		<script type="module">
+
+			import * as THREE from '/three.module.js';
+			import { OrbitControls } from '/OrbitControls.js';
+			import { EffectComposer } from '/EffectComposer.js';
+			import { RenderPass } from '/RenderPass.js';
+			import { UnrealBloomPass } from '/UnrealBloomPass.js';
+
+			let camera, stats;
+			let composer, renderer, mixer, clock;
+
+			let geometry, material, line, wireframe;
+
+			let torusGeo, torus2;
+
+			let particleGeo, vertices, sprite, particles, particleMat;
+
+			const params = {
+				exposure: 1,
+				bloomStrength: 1,
+				bloomThreshold: 0,
+				bloomRadius: 0
+			};
+
+			init();
+
+			function init() {
+
+				const container = document.getElementById( 'container' );
+
+				clock = new THREE.Clock();
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.toneMapping = THREE.ReinhardToneMapping;
+				container.appendChild( renderer.domElement );
+
+				const scene = new THREE.Scene();
+
+				//particles
+
+				particleGeo = new THREE.BufferGeometry();
+				vertices = [];
+				sprite = new THREE.TextureLoader().load('sprite.png');
+
+
+				for ( let i = 0; i < 1000; i ++ ) {
+					const x = 20 * (Math.random() - 0.5);
+					const y = 20 * (Math.random() - 0.5);
+					const z = 20 *(Math.random() - 0.5);
+
+					vertices.push( x, y, z );
+				}
+				particleGeo.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+				particleMat = new THREE.PointsMaterial( { size: 0.2, sizeAttenuation: true, map: sprite, alphaTest: 0.5, transparent: true } );
+				particleMat.color.setHSL( 1.0, 0.3, 0.7 );
+				particles = new THREE.Points( particleGeo, particleMat );
+				scene.add(particles);
+
+				//camera
+
+				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 100 );
+				camera.position.set( - 7, 0, 0 );
+				scene.add( camera );
+				scene.fog = new THREE.Fog(0xff00ff, 0.1, 20);
+
+				const controls = new OrbitControls( camera, renderer.domElement );
+				controls.maxPolarAngle = Math.PI * 0.5;
+				controls.minDistance = 4;
+				controls.maxDistance = 14;
+				controls.autoRotate = true;
+
+				scene.add( new THREE.AmbientLight( 0x404040 ) );
+
+				const pointLight = new THREE.PointLight( 0xffffff, 1 );
+				camera.add( pointLight );
+
+				const renderScene = new RenderPass( scene, camera );
+
+				const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
+				bloomPass.threshold = params.bloomThreshold;
+				bloomPass.strength = params.bloomStrength;
+				bloomPass.radius = params.bloomRadius;
+
+				composer = new EffectComposer( renderer );
+				composer.addPass( renderScene );
+				composer.addPass( bloomPass );
+
+				geometry = new THREE.TorusKnotGeometry(2,0.01,500,20,10,17); //radius, tube, tubsection, radsection, p, q
+				material = new THREE.MeshBasicMaterial( { color: 0x00fffff } );
+				line = new THREE.Mesh( geometry, material );
+				//wireframe = new THREE.WireframeGeometry( geometry );
+				//line = new THREE.Line( wireframe, new THREE.LineBasicMaterial({ color: 0x00fffff }));
+				scene.add( line );
+				line.rotateX(Math.PI/2);
+				
+				torusGeo = new THREE.Mesh(new THREE.TorusGeometry(2,0.99,25,40),new THREE.MeshBasicMaterial( { color: 0x00fffff, transparent: true, opacity: 0.1 } ));
+				scene.add( torusGeo );
+				torusGeo.rotateX(Math.PI/2);
+
+				torus2 = new THREE.Mesh(new THREE.TorusGeometry(2,0.1,25,40),new THREE.MeshBasicMaterial( { color: 0x00fffff } ));
+				scene.add( torus2 );
+				torus2.rotateX(Math.PI/2);
+				
+				animate();
+				window.addEventListener( 'resize', onWindowResize );
+
+			}
+
+			function onWindowResize() {
+
+				const width = window.innerWidth;
+				const height = window.innerHeight;
+
+				camera.aspect = width / height;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( width, height );
+				composer.setSize( width, height );
+
+			}
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				const delta = clock.getDelta();
+
+				line.rotateY(delta/4);
+				torusGeo.rotateY(delta/4);
+				torus2.rotateY(delta/4);
+
+				particles.rotateY(delta/8);
+
+				composer.render();
+
+			}
+
+		</script>
+
+	</body>
+
+</html>
