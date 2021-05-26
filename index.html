@@ -11,6 +11,8 @@
 	</head>
 	<body>
 
+		<h1 id="name">ALEX HOPKINS</h1>
+
 		<div id="container"></div>
 
 		<script type="module">
@@ -28,7 +30,27 @@
 
 			let torusGeo, torus2;
 
+
+			let satArray = [];
+			let orbitArray = [];
+
+			let values = [
+				{
+					width: 2
+				},
+				{
+					width: 3
+				},
+				{
+					width: 4
+				},
+				{
+					width: 5
+				}
+			];
+
 			let particleGeo, vertices, sprite, particles, particleMat;
+			let scene;
 
 			const params = {
 				exposure: 1,
@@ -51,7 +73,7 @@
 				renderer.toneMapping = THREE.ReinhardToneMapping;
 				container.appendChild( renderer.domElement );
 
-				const scene = new THREE.Scene();
+				scene = new THREE.Scene();
 
 				//particles
 
@@ -75,10 +97,10 @@
 
 				//camera
 
-				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 100 );
-				camera.position.set( - 7, 0, 0 );
+				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 0.01, 100 );
+				camera.position.set( 0, 14, 0 );
 				scene.add( camera );
-				scene.fog = new THREE.Fog(0xff00ff, 0.1, 20);
+				scene.fog = new THREE.Fog(0x00ffff, 0.1, 20);
 
 				const controls = new OrbitControls( camera, renderer.domElement );
 				controls.maxPolarAngle = Math.PI * 0.5;
@@ -102,22 +124,22 @@
 				composer.addPass( renderScene );
 				composer.addPass( bloomPass );
 
-				geometry = new THREE.TorusKnotGeometry(2,0.01,500,20,10,17); //radius, tube, tubsection, radsection, p, q
-				material = new THREE.MeshBasicMaterial( { color: 0x00fffff } );
-				line = new THREE.Mesh( geometry, material );
-				//wireframe = new THREE.WireframeGeometry( geometry );
-				//line = new THREE.Line( wireframe, new THREE.LineBasicMaterial({ color: 0x00fffff }));
-				scene.add( line );
-				line.rotateX(Math.PI/2);
+				//geometry = new THREE.TorusKnotGeometry(2,0.01,500,20,10,17); //radius, tube, tubsection, radsection, p, q
+				//material = new THREE.MeshBasicMaterial( { color: 0xff00ff } );
+				//line = new THREE.Mesh( geometry, material );
+				//scene.add( line );
+				//line.rotateX(Math.PI/2);
 				
-				torusGeo = new THREE.Mesh(new THREE.TorusGeometry(2,0.99,25,40),new THREE.MeshBasicMaterial( { color: 0x00fffff, transparent: true, opacity: 0.1 } ));
-				scene.add( torusGeo );
-				torusGeo.rotateX(Math.PI/2);
+				//torusGeo = new THREE.Mesh(new THREE.TorusGeometry(2,0.99,25,40),new THREE.MeshBasicMaterial( { color: 0xff00ff, transparent: true, opacity: 0.05 } ));
+				//scene.add( torusGeo );
+				//torusGeo.rotateX(Math.PI/2);
 
-				torus2 = new THREE.Mesh(new THREE.TorusGeometry(2,0.1,25,40),new THREE.MeshBasicMaterial( { color: 0x00fffff } ));
-				scene.add( torus2 );
-				torus2.rotateX(Math.PI/2);
 				
+				for (let i = 0; i < values.length; i++) {
+					satellite(values[i].width,0.01);//width,thickness
+				}
+
+
 				animate();
 				window.addEventListener( 'resize', onWindowResize );
 
@@ -142,14 +164,38 @@
 
 				const delta = clock.getDelta();
 
-				line.rotateY(delta/4);
-				torusGeo.rotateY(delta/4);
-				torus2.rotateY(delta/4);
+				//line.rotateY(delta/4);
+				//torusGeo.rotateY(delta/4);
+
+
+				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(1,32,32),new THREE.MeshBasicMaterial( { color: 0xff00ff } ));
+				scene.add(orbitSpawn);
+				for (let i = 0; i < orbitArray.length; i++) {
+					orbitArray[i].rotateY(-delta);
+					orbitArray[i].position.z = values[i].width*Math.sin(clock.getElapsedTime ()/values[i].width );
+					orbitArray[i].position.x = values[i].width*Math.cos(clock.getElapsedTime ()/values[i].width );
+				}
+				
+				
+				//console.log(Math.PI/2+torus2.rotation.y);
+				
 
 				particles.rotateY(delta/8);
+				particles.rotateX(delta/32);
 
 				composer.render();
 
+			}
+
+			function satellite(width,thickness) { //width, thickness
+				const torusSpawn = new THREE.Mesh(new THREE.TorusGeometry(width,thickness,25,40),new THREE.MeshBasicMaterial( { color: 0xff00ff, transparent: true, opacity: 0.1} ));
+				torusSpawn.rotateX(Math.PI/2);
+				satArray.push(torusSpawn);
+				scene.add( torusSpawn );
+				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(0.1),new THREE.MeshBasicMaterial( { color: 0xff00ff } ));
+				orbitArray.push(orbitSpawn);
+				scene.add( orbitSpawn );
+				
 			}
 
 		</script>
