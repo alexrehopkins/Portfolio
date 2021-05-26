@@ -30,13 +30,14 @@
 
 			let torusGeo, torus2;
 
+			let timer;
 
 			let satArray = [];
 			let orbitArray = [];
 
 			let values = [
 				{
-					width: 2
+					width: 2.5
 				},
 				{
 					width: 3
@@ -83,9 +84,9 @@
 
 
 				for ( let i = 0; i < 1000; i ++ ) {
-					const x = 20 * (Math.random() - 0.5);
-					const y = 20 * (Math.random() - 0.5);
-					const z = 20 *(Math.random() - 0.5);
+					const x = 40 * (Math.random() - 0.5);
+					const y = 40 * (Math.random() - 0.5);
+					const z = 40 *(Math.random() - 0.5);
 
 					vertices.push( x, y, z );
 				}
@@ -134,7 +135,8 @@
 				//scene.add( torusGeo );
 				//torusGeo.rotateX(Math.PI/2);
 
-				
+				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(1,32,32),new THREE.MeshBasicMaterial( { color: 0xff00ff } ));
+				scene.add(orbitSpawn);
 				for (let i = 0; i < values.length; i++) {
 					satellite(values[i].width,0.01);//width,thickness
 				}
@@ -168,8 +170,7 @@
 				//torusGeo.rotateY(delta/4);
 
 
-				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(1,32,32),new THREE.MeshBasicMaterial( { color: 0xff00ff } ));
-				scene.add(orbitSpawn);
+				
 				for (let i = 0; i < orbitArray.length; i++) {
 					orbitArray[i].rotateY(-delta);
 					orbitArray[i].position.z = values[i].width*Math.sin(clock.getElapsedTime ()/values[i].width );
