@@ -20,3 +20,8 @@ p {
     color: rgb(255, 255, 255);
     text-shadow: rgb(0, 255, 255) 0px 0px 20px;
 }
+
+#resetBtn {
+    position: absolute;
+    top: 10px;
+}

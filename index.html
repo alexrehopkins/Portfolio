@@ -13,6 +13,8 @@
 
 		<h1 id="name">ALEX HOPKINS</h1>
 
+		<button id="resetBtn">reset</button>
+
 		<div id="container"></div>
 
 		<script type="module">
@@ -28,7 +30,9 @@
 
 			let geometry, material, line, wireframe;
 
-			let torusGeo, torus2;
+			let mouse, raycaster;
+			
+			let mode = 1;
 
 			let timer;
 
@@ -37,16 +41,20 @@
 
 			let values = [
 				{
-					width: 2.5
+					width: 2.5,
+					size: 0.05
 				},
 				{
-					width: 3
+					width: 3,
+					size: 0.2
 				},
 				{
-					width: 4
+					width: 4,
+					size: 0.15
 				},
 				{
-					width: 5
+					width: 5,
+					size: 0.1
 				}
 			];
 
@@ -62,7 +70,33 @@
 
 			init();
 
+
+			
+
+			function onMouseMove( event ) {
+
+				// calculate mouse position in normalized device coordinates
+				// (-1 to +1) for both components
+
+				mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+			}
+
+			function resetter() {
+				mode = mode*-1;
+				for (let i = 0; i < satArray.length; i++) {
+					satArray[i].rotation.x = 0;
+					satArray[i].rotation.z = 0;
+					satArray[i].rotation.y = 0;
+					satArray[i].position.y = 0;
+				}
+			}
+
 			function init() {
+				raycaster = new THREE.Raycaster();
+				raycaster.layers.set( 1 );
+				mouse = new THREE.Vector2();
 
 				const container = document.getElementById( 'container' );
 
@@ -101,12 +135,12 @@
 				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 0.01, 100 );
 				camera.position.set( 0, 14, 0 );
 				scene.add( camera );
-				scene.fog = new THREE.Fog(0x00ffff, 0.1, 20);
+				//scene.fog = new THREE.Fog(0x00ffff, 0.1, 20);
 
 				const controls = new OrbitControls( camera, renderer.domElement );
 				controls.maxPolarAngle = Math.PI * 0.5;
 				controls.minDistance = 4;
-				controls.maxDistance = 14;
+				controls.maxDistance = 24;
 				controls.autoRotate = true;
 
 				scene.add( new THREE.AmbientLight( 0x404040 ) );
@@ -125,20 +159,11 @@
 				composer.addPass( renderScene );
 				composer.addPass( bloomPass );
 
-				//geometry = new THREE.TorusKnotGeometry(2,0.01,500,20,10,17); //radius, tube, tubsection, radsection, p, q
-				//material = new THREE.MeshBasicMaterial( { color: 0xff00ff } );
-				//line = new THREE.Mesh( geometry, material );
-				//scene.add( line );
-				//line.rotateX(Math.PI/2);
-				
-				//torusGeo = new THREE.Mesh(new THREE.TorusGeometry(2,0.99,25,40),new THREE.MeshBasicMaterial( { color: 0xff00ff, transparent: true, opacity: 0.05 } ));
-				//scene.add( torusGeo );
-				//torusGeo.rotateX(Math.PI/2);
-
+				//objects
 				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(1,32,32),new THREE.MeshBasicMaterial( { color: 0xff00ff } ));
 				scene.add(orbitSpawn);
 				for (let i = 0; i < values.length; i++) {
-					satellite(values[i].width,0.01);//width,thickness
+					satellite(values[i].width,values[i].size);//width,thickness
 				}
 
 
@@ -161,43 +186,53 @@
 			}
 
 			function animate() {
+				raycaster.setFromCamera( mouse, camera );
+				const intersects = raycaster.intersectObjects( scene.children,true );
+				if (intersects.length > 0) {
+
+					intersects[0].object.material.color.set( 0xffffff );
+				}
+
+				window.addEventListener( 'mousemove', onMouseMove, false );
 
 				requestAnimationFrame( animate );
 
 				const delta = clock.getDelta();
-
-				//line.rotateY(delta/4);
-				//torusGeo.rotateY(delta/4);
-
-
 				
-				for (let i = 0; i < orbitArray.length; i++) {
-					orbitArray[i].rotateY(-delta);
-					orbitArray[i].position.z = values[i].width*Math.sin(clock.getElapsedTime ()/values[i].width );
-					orbitArray[i].position.x = values[i].width*Math.cos(clock.getElapsedTime ()/values[i].width );
+				for (let i = 0; i < satArray.length; i++) {
+					satArray[i].rotateY(delta/values[i].width);
+					if (mode == -1) {
+						satArray[i].position.y = -values[i].width+1;
+					}
+					else {
+						satArray[i].rotateX(delta/values[i].width/10);
+					}
 				}
-				
-				
-				//console.log(Math.PI/2+torus2.rotation.y);
-				
 
 				particles.rotateY(delta/8);
 				particles.rotateX(delta/32);
-
 				composer.render();
 
 			}
 
 			function satellite(width,thickness) { //width, thickness
-				const torusSpawn = new THREE.Mesh(new THREE.TorusGeometry(width,thickness,25,40),new THREE.MeshBasicMaterial( { color: 0xff00ff, transparent: true, opacity: 0.1} ));
+				const torusSpawn = new THREE.Mesh(new THREE.TorusGeometry(width,thickness/10,25,40),new THREE.MeshBasicMaterial( { color: 0xff00ff, transparent: true, opacity: 0.1} ));
 				torusSpawn.rotateX(Math.PI/2);
-				satArray.push(torusSpawn);
-				scene.add( torusSpawn );
-				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(0.1),new THREE.MeshBasicMaterial( { color: 0xff00ff } ));
+				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(thickness),new THREE.MeshBasicMaterial( { color: 0xff00ff } ));
+				orbitSpawn.position.set(width,0,0);
+				orbitSpawn.layers.enable( 1 );
+				
 				orbitArray.push(orbitSpawn);
-				scene.add( orbitSpawn );
+				const group = new THREE.Group();
+				group.add( torusSpawn );
+				group.add( orbitSpawn );
+				group.layers.enable( 1 );
+				satArray.push(group);
+				scene.add( group );
 				
 			}
+
+			document.getElementById("resetBtn").addEventListener("click", resetter);
 
 		</script>
 
