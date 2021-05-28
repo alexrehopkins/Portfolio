@@ -15,6 +15,14 @@
 
 		<button id="resetBtn">reset</button>
 
+		<div class="info">
+			<h1>Project Title, Date</h1>
+			<p>Description</p>
+			<h2>Roles</h2>
+			<img>
+			<h2>Client</h2>
+		</div>
+
 		<div id="container"></div>
 
 		<script type="module">
@@ -31,7 +39,10 @@
 			let geometry, material, line, wireframe;
 
 			let mouse, raycaster;
+			let mousedowned = false;
 			
+			let currentSelected = 0;
+
 			let mode = 1;
 
 			let timer;
@@ -82,6 +93,15 @@
 				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
 			}
+
+			function onMouseDown( event ) {
+				mousedowned = true;
+			}
+
+			function onMouseUp( event ) {
+				mousedowned = false;
+			}
+
 
 			function resetter() {
 				mode = mode*-1;
@@ -142,6 +162,7 @@
 				controls.minDistance = 4;
 				controls.maxDistance = 24;
 				controls.autoRotate = true;
+				controls.enablePan = false;
 
 				scene.add( new THREE.AmbientLight( 0x404040 ) );
 
@@ -163,7 +184,7 @@
 				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(1,32,32),new THREE.MeshBasicMaterial( { color: 0xff00ff } ));
 				scene.add(orbitSpawn);
 				for (let i = 0; i < values.length; i++) {
-					satellite(values[i].width,values[i].size);//width,thickness
+					satellite(values[i].width,values[i].size, i);//width,thickness
 				}
 
 
@@ -186,21 +207,14 @@
 			}
 
 			function animate() {
-				raycaster.setFromCamera( mouse, camera );
-				const intersects = raycaster.intersectObjects( scene.children,true );
-				if (intersects.length > 0) {
-
-					intersects[0].object.material.color.set( 0xffffff );
-				}
-
-				window.addEventListener( 'mousemove', onMouseMove, false );
-
-				requestAnimationFrame( animate );
-
 				const delta = clock.getDelta();
-				
 				for (let i = 0; i < satArray.length; i++) {
 					satArray[i].rotateY(delta/values[i].width);
+					orbitArray[i].material.color.set(0xff0000);
+					if (i == currentSelected) {
+						orbitArray[i].material.color.set(0xffff00);
+					}
+					
 					if (mode == -1) {
 						satArray[i].position.y = -values[i].width+1;
 					}
@@ -208,6 +222,27 @@
 						satArray[i].rotateX(delta/values[i].width/10);
 					}
 				}
+				raycaster.setFromCamera( mouse, camera );
+				const intersects = raycaster.intersectObjects( scene.children,true );
+				if (intersects.length > 0) {
+					
+					intersects[0].object.material.color.set( 0xffffff );
+					if (mousedowned && intersects[0].object.val != currentSelected) {
+						console.log(intersects[0].object.val);
+						currentSelected = intersects[0].object.val;
+					}
+
+				}
+
+				window.addEventListener( 'pointermove', onMouseMove, false );
+				window.addEventListener( 'pointerdown', onMouseDown, false );
+				window.addEventListener( 'pointerup', onMouseUp, false );
+
+				requestAnimationFrame( animate );
+
+				
+				
+				
 
 				particles.rotateY(delta/8);
 				particles.rotateX(delta/32);
@@ -215,12 +250,13 @@
 
 			}
 
-			function satellite(width,thickness) { //width, thickness
-				const torusSpawn = new THREE.Mesh(new THREE.TorusGeometry(width,thickness/10,25,40),new THREE.MeshBasicMaterial( { color: 0xff00ff, transparent: true, opacity: 0.1} ));
+			function satellite(width,thickness,value) { //width, thickness
+				const torusSpawn = new THREE.Mesh(new THREE.TorusGeometry(width,thickness/10,25,40),new THREE.MeshBasicMaterial( { color: 0xff00ff, transparent: true, opacity: 0.2} ));
 				torusSpawn.rotateX(Math.PI/2);
 				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(thickness),new THREE.MeshBasicMaterial( { color: 0xff00ff } ));
 				orbitSpawn.position.set(width,0,0);
 				orbitSpawn.layers.enable( 1 );
+				orbitSpawn.val = value;
 				
 				orbitArray.push(orbitSpawn);
 				const group = new THREE.Group();
