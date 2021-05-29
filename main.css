@@ -1,3 +1,5 @@
+@import url(//fonts.googleapis.com/css?family=Lato:300:400);
+
 html, body {
     padding: 0px;
     margin: 0px;
@@ -5,34 +7,72 @@ html, body {
     height: 100%;
 }
 
-p {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;   
+p, h1, h2, h3 {
+    font-family: 'Lato', sans-serif;
+    color: white;  
 }
 
-#name {
+a {
+    color: #69d9ef;
+}
+
+#name, #tabs {
     position: absolute;
     top: 10px;
     margin: 0px;
-    width: 100%;
-    font-size: 8vw;
-    text-align: center;
-    font-family: 'Garamond ';
+    font-size: 3vw;
+    font-family: 'Lato', sans-serif;
+    font-weight: lighter;
     color: rgb(255, 255, 255);
-    text-shadow: rgb(0, 255, 255) 0px 0px 20px;
-}
-
-#resetBtn {
-    position: absolute;
-    top: 10px;
+    /* text-shadow: rgb(0, 255, 255) 0px 0px 20px; */
 }
 
 #container {
     z-index: -10;
 }
 
-.info {
+#info {
     position: absolute;
-    top: 10%;
-    left: 10%;
-    background-color: cornsilk;
+    top: 100px;
+    left: 20px;
+    right: 20px;
+    display: none;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.459);
+    /*outline: white solid 3px;*/
+    border-radius: 1px;
+    border:rgb(255, 255, 255) solid 3px;
+    border-radius: 5px;
+}
+
+#closer {
+    position: absolute;
+    top:0px;
+    right:30px;
+    cursor: pointer;
+}
+
+#tutorial {
+    position: absolute;
+    cursor: pointer;
+    width: 50px;
+    left: 50%;
+    top: 50%;
+    animation: pulse 1s linear infinite;
+    user-select: none
+}
+
+@keyframes pulse {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+    50% {
+       -webkit-transform: scale(0.8);
+       transform: scale(0.8);
+    }
+    100% {
+        -webkit-transform: scale(1);
+       transform: scale(1);
+    }
 }

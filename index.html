@@ -5,23 +5,27 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link type="text/css" rel="stylesheet" href="main.css">
+		<link rel="icon" href="/favicon.ico?v=2" type="image/x-icon" />
 		<style>
 
 		</style>
 	</head>
 	<body>
 
-		<h1 id="name">ALEX HOPKINS</h1>
+		<h1 id="name" style="left: 30px"><a style="text-decoration: none; color: aliceblue;" href="https://www.linkedin.com/in/ahop/">ALEX HOPKINS</a></h1>
 
-		<button id="resetBtn">reset</button>
+		<h1 id="tabs" style="right: 30px"><span style="color: rgb(115, 255, 255);">DESIGN</span> - <span style="color: rgb(191, 142, 255);">DEVELOPMENT</span></h1>
 
-		<div class="info">
-			<h1>Project Title, Date</h1>
-			<p>Description</p>
-			<h2>Roles</h2>
-			<img>
-			<h2>Client</h2>
+		<div id="info">
+			<h1 id="closer">X</h1>
+			<h1 id="title">Hi</h1>
+			<p id="desc">I'm an emerging visual creative with a background in maths and code, based in Bristol</p>
+			<h2 id="roles">Click on the small orbs to check out my projects, the purple ones are design projects (user experience, graphics, etc) and the green are development projects (frontend, javascript games, etc)</h2>
+			<img id="pic" src="pics/help.png">
+			<h2 id="client">Want to collaborate? <a href="https://www.linkedin.com/in/ahop/">Contact me</a></h2>
 		</div>
+
+		<img id="tutorial" src="pics/pointer.png">
 
 		<div id="container"></div>
 
@@ -33,15 +37,34 @@
 			import { RenderPass } from '/RenderPass.js';
 			import { UnrealBloomPass } from '/UnrealBloomPass.js';
 
+			import {ShaderPass} from '/ShaderPass.js';
+
+			const colorScheme = {
+				standingOrb: 0x3262AC,
+				hoverOrb: 0x69d9ef,
+				clickedOrb: 0xffffff,
+				background: 0x04060b, //141a30
+				sunOrb: 0x69d9ef
+			};
+
+			const variables = {
+				rotSpeed: 0.3,
+				sunBeamSpeed: 1,
+				particleSpeed: 1/8,
+				sunbeamCount: 3
+			}
+
 			let camera, stats;
 			let composer, renderer, mixer, clock;
 
 			let geometry, material, line, wireframe;
-
+			let controls;
 			let mouse, raycaster;
 			let mousedowned = false;
-			
-			let currentSelected = 0;
+
+			let shinies = [];
+
+			let currentSelected = -1;
 
 			let mode = 1;
 
@@ -72,6 +95,8 @@
 			let particleGeo, vertices, sprite, particles, particleMat;
 			let scene;
 
+			
+
 			const params = {
 				exposure: 1,
 				bloomStrength: 1,
@@ -95,49 +120,60 @@
 			}
 
 			function onMouseDown( event ) {
-				mousedowned = true;
+				raycaster.setFromCamera( mouse, camera );
+				const intersects = raycaster.intersectObjects( scene.children,true );
+				if (intersects.length > 0) {
+					if (intersects[0].object.val == -10) {
+						controls.enabled = false;
+						document.getElementById("info").style.display = "block";
+						document.getElementById("tutorial").style.display = "none";
+					}
+					if (intersects[0].object.val != currentSelected) {
+						controls.enabled = false;
+							currentSelected = intersects[0].object.val;
+						
+					}
+				}
 			}
 
 			function onMouseUp( event ) {
-				mousedowned = false;
+				
+				controls.enabled = true;
 			}
 
 
-			function resetter() {
-				mode = mode*-1;
-				for (let i = 0; i < satArray.length; i++) {
-					satArray[i].rotation.x = 0;
-					satArray[i].rotation.z = 0;
-					satArray[i].rotation.y = 0;
-					satArray[i].position.y = 0;
-				}
+
+
+			function close() {
+				document.getElementById("info").style.display = "none";
 			}
 
 			function init() {
 				raycaster = new THREE.Raycaster();
 				raycaster.layers.set( 1 );
 				mouse = new THREE.Vector2();
-
+				mouse.x = -10000;
+				mouse.y = -10000;
 				const container = document.getElementById( 'container' );
 
 				clock = new THREE.Clock();
 
-				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer = new THREE.WebGLRenderer( { antialias: false } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				renderer.toneMapping = THREE.ReinhardToneMapping;
 				container.appendChild( renderer.domElement );
-
+				
 				scene = new THREE.Scene();
 
 				//particles
 
 				particleGeo = new THREE.BufferGeometry();
 				vertices = [];
-				sprite = new THREE.TextureLoader().load('sprite.png');
+				sprite = new THREE.TextureLoader().load('pics/sprite.png');
 
 
-				for ( let i = 0; i < 1000; i ++ ) {
+				for ( let i = 0; i < 2000; i ++ ) {
 					const x = 40 * (Math.random() - 0.5);
 					const y = 40 * (Math.random() - 0.5);
 					const z = 40 *(Math.random() - 0.5);
@@ -149,7 +185,10 @@
 				particleMat.color.setHSL( 1.0, 0.3, 0.7 );
 				particles = new THREE.Points( particleGeo, particleMat );
 				scene.add(particles);
-
+				scene.background = new THREE.Color( colorScheme.background );
+				
+				
+				
 				//camera
 
 				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 0.01, 100 );
@@ -157,11 +196,10 @@
 				scene.add( camera );
 				//scene.fog = new THREE.Fog(0x00ffff, 0.1, 20);
 
-				const controls = new OrbitControls( camera, renderer.domElement );
+				controls = new OrbitControls( camera, renderer.domElement );
 				controls.maxPolarAngle = Math.PI * 0.5;
 				controls.minDistance = 4;
 				controls.maxDistance = 24;
-				controls.autoRotate = true;
 				controls.enablePan = false;
 
 				scene.add( new THREE.AmbientLight( 0x404040 ) );
@@ -179,9 +217,16 @@
 				composer = new EffectComposer( renderer );
 				composer.addPass( renderScene );
 				composer.addPass( bloomPass );
+				
 
 				//objects
-				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(1,32,32),new THREE.MeshBasicMaterial( { color: 0xff00ff } ));
+				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(0.7,32,32),new THREE.MeshBasicMaterial( { color: colorScheme.sunOrb } ));
+				for (let i = 0; i < variables.sunbeamCount; i++) {
+					shinies[i] = new THREE.Mesh(new THREE.SphereGeometry(1,32,32),new THREE.MeshBasicMaterial( { color: colorScheme.sunOrb} ));
+					scene.add(shinies[i]);
+				}
+				orbitSpawn.layers.enable( 1 );
+				orbitSpawn.val = -10;
 				scene.add(orbitSpawn);
 				for (let i = 0; i < values.length; i++) {
 					satellite(values[i].width,values[i].size, i);//width,thickness
@@ -209,29 +254,31 @@
 			function animate() {
 				const delta = clock.getDelta();
 				for (let i = 0; i < satArray.length; i++) {
-					satArray[i].rotateY(delta/values[i].width);
-					orbitArray[i].material.color.set(0xff0000);
-					if (i == currentSelected) {
-						orbitArray[i].material.color.set(0xffff00);
+					satArray[i].rotateY(-variables.rotSpeed*delta/values[i].width);
+					if (orbitArray[i].material.color != colorScheme.standingOrb) {
+						orbitArray[i].material.color.set(colorScheme.standingOrb);
 					}
-					
+					if (i == currentSelected && orbitArray[i].material.color != colorScheme.clickedOrb) {
+						orbitArray[i].material.color.set(colorScheme.clickedOrb);
+					}
 					if (mode == -1) {
 						satArray[i].position.y = -values[i].width+1;
 					}
 					else {
-						satArray[i].rotateX(delta/values[i].width/10);
+						satArray[i].rotateX(variables.rotSpeed*delta/values[i].width/10);
 					}
 				}
 				raycaster.setFromCamera( mouse, camera );
 				const intersects = raycaster.intersectObjects( scene.children,true );
+				document.getElementById("container").style.cursor = "";
+				
 				if (intersects.length > 0) {
 					
-					intersects[0].object.material.color.set( 0xffffff );
-					if (mousedowned && intersects[0].object.val != currentSelected) {
-						console.log(intersects[0].object.val);
-						currentSelected = intersects[0].object.val;
+					document.getElementById("container").style.cursor = "pointer";
+					if (intersects[0].object.val != currentSelected) {
+						intersects[0].object.material.color.set( colorScheme.hoverOrb );
+						document.getElementById("tabs").innerHTML = "Title";
 					}
-
 				}
 
 				window.addEventListener( 'pointermove', onMouseMove, false );
@@ -239,39 +286,39 @@
 				window.addEventListener( 'pointerup', onMouseUp, false );
 
 				requestAnimationFrame( animate );
-
+				controls.update();
 				
-				
-				
-
-				particles.rotateY(delta/8);
-				particles.rotateX(delta/32);
+				for (let i = 0; i < shinies.length; i++) { 
+					shinies[i].rotateY(delta/(i+1)*variables.sunBeamSpeed);
+					shinies[i].rotateZ(delta/(i+1)*variables.sunBeamSpeed);
+					shinies[i].rotateX(delta/(i+1)*variables.sunBeamSpeed);
+					shinies[i].scale.set((i+1),(i+1)/300,(i+1)/300);
+				}
+				particles.rotateY(delta*variables.particleSpeed);
+				particles.rotateX(delta*variables.particleSpeed/4);
 				composer.render();
 
 			}
 
 			function satellite(width,thickness,value) { //width, thickness
-				const torusSpawn = new THREE.Mesh(new THREE.TorusGeometry(width,thickness/10,25,40),new THREE.MeshBasicMaterial( { color: 0xff00ff, transparent: true, opacity: 0.2} ));
+				const torusSpawn = new THREE.Mesh(new THREE.TorusGeometry(width,thickness/10,25,40),new THREE.MeshBasicMaterial( { color: colorScheme.standingOrb, transparent: true, opacity: 0.2} ));
 				torusSpawn.rotateX(Math.PI/2);
-				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(thickness),new THREE.MeshBasicMaterial( { color: 0xff00ff } ));
+				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(thickness,32,32),new THREE.MeshBasicMaterial( { color: colorScheme.standingOrb } ));
 				orbitSpawn.position.set(width,0,0);
 				orbitSpawn.layers.enable( 1 );
 				orbitSpawn.val = value;
 				
 				orbitArray.push(orbitSpawn);
 				const group = new THREE.Group();
+				group.rotateY(Math.random()*6);
 				group.add( torusSpawn );
 				group.add( orbitSpawn );
 				group.layers.enable( 1 );
 				satArray.push(group);
-				scene.add( group );
-				
+				scene.add( group );				
 			}
-
-			document.getElementById("resetBtn").addEventListener("click", resetter);
-
+			document.getElementById("closer").addEventListener("click", close);
+			document.getElementById("tutorial").onselectstart = function () { return false; }
 		</script>
-
 	</body>
-
 </html>
