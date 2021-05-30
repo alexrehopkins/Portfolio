@@ -20,9 +20,9 @@
 			<h1 id="closer">X</h1>
 			<h1 id="title">Hi</h1>
 			<p id="desc">I'm an emerging visual creative with a background in maths and code, based in Bristol</p>
-			<h2 id="roles">Click on the small orbs to check out my projects, the purple ones are design projects (user experience, graphics, etc) and the green are development projects (frontend, javascript games, etc)</h2>
 			<img id="pic" src="pics/help.png">
-			<h2 id="client">Want to collaborate? <a href="https://www.linkedin.com/in/ahop/">Contact me</a></h2>
+			<h2 id="roles">Click on the small orbs to check out my projects, the purple ones are design projects (user experience, graphics, etc) and the green are development projects (frontend, javascript games, etc)</h2>
+			<h2 id="client">Want to collaborate? <a href="https://www.linkedin.com/in/ahop/">Find me here</a> Or <a href="alexrehopkins@gmail.com">contact me</a></h2>
 		</div>
 
 		<img id="tutorial" src="pics/pointer.png">
@@ -39,10 +39,14 @@
 
 			import {ShaderPass} from '/ShaderPass.js';
 
+			
+
 			const colorScheme = {
-				standingOrb: 0x3262AC,
-				hoverOrb: 0x69d9ef,
+				standingOrbDev: 0x3a32ac,
+				hoverOrbDes: 0x69d9ef,
 				clickedOrb: 0xffffff,
+				standingOrbDes: 0x328eac,
+				hoverOrbDev: 0x696bef,
 				background: 0x04060b, //141a30
 				sunOrb: 0x69d9ef
 			};
@@ -64,9 +68,13 @@
 
 			let shinies = [];
 
+			let originalText, originalTitle, originalDesc, originalImg, originalRoles, originalClient;
+
 			let currentSelected = -1;
 
 			let mode = 1;
+
+			let data;
 
 			let timer;
 
@@ -125,13 +133,18 @@
 				if (intersects.length > 0) {
 					if (intersects[0].object.val == -10) {
 						controls.enabled = false;
+						document.getElementById( 'title' ).innerHTML = originalTitle;
+						document.getElementById( 'client' ).innerHTML = originalClient;
+						document.getElementById( 'desc' ).innerHTML = originalDesc;
+						document.getElementById( 'pic' ).src = originalImg;
+						document.getElementById( 'roles' ).innerHTML = originalRoles;
 						document.getElementById("info").style.display = "block";
 						document.getElementById("tutorial").style.display = "none";
 					}
 					if (intersects[0].object.val != currentSelected) {
 						controls.enabled = false;
-							currentSelected = intersects[0].object.val;
-						
+						currentSelected = intersects[0].object.val;
+						updateInfo(intersects[0].object.val,intersects[0].object.topic);
 					}
 				}
 			}
@@ -149,6 +162,28 @@
 			}
 
 			function init() {
+				originalText = document.getElementById( 'tabs' ).innerHTML;
+				originalTitle = document.getElementById( 'title' ).innerHTML;
+				originalClient = document.getElementById( 'client' ).innerHTML;
+				originalDesc = document.getElementById( 'desc' ).innerHTML;
+				originalImg = document.getElementById( 'pic' ).src;
+				originalRoles = document.getElementById( 'roles' ).innerHTML;
+				//import project data
+				fetch("/Projects.json")
+				.then(response => {
+				return response.json();
+				})
+				.then(database => {
+					data = database;
+					for (let i = 0; i < data.design.length; i++) {
+						satellite(i,"design");//width,thickness
+					}
+					for (let i = 0; i < data.development.length; i++) {
+						satellite(i,"development");//width,thickness
+					}
+					animate();
+				});
+
 				raycaster = new THREE.Raycaster();
 				raycaster.layers.set( 1 );
 				mouse = new THREE.Vector2();
@@ -227,13 +262,10 @@
 				}
 				orbitSpawn.layers.enable( 1 );
 				orbitSpawn.val = -10;
+				orbitSpawn.title = "Introduction";
 				scene.add(orbitSpawn);
-				for (let i = 0; i < values.length; i++) {
-					satellite(values[i].width,values[i].size, i);//width,thickness
-				}
-
-
-				animate();
+				
+				
 				window.addEventListener( 'resize', onWindowResize );
 
 			}
@@ -254,9 +286,9 @@
 			function animate() {
 				const delta = clock.getDelta();
 				for (let i = 0; i < satArray.length; i++) {
-					satArray[i].rotateY(-variables.rotSpeed*delta/values[i].width);
-					if (orbitArray[i].material.color != colorScheme.standingOrb) {
-						orbitArray[i].material.color.set(colorScheme.standingOrb);
+					satArray[i].rotateY(-variables.rotSpeed*delta/satArray[i].width);
+					if (orbitArray[i].material.color != satArray[i].originalColor) {
+						orbitArray[i].material.color.set(satArray[i].originalColor);
 					}
 					if (i == currentSelected && orbitArray[i].material.color != colorScheme.clickedOrb) {
 						orbitArray[i].material.color.set(colorScheme.clickedOrb);
@@ -265,7 +297,7 @@
 						satArray[i].position.y = -values[i].width+1;
 					}
 					else {
-						satArray[i].rotateX(variables.rotSpeed*delta/values[i].width/10);
+						satArray[i].rotateX(variables.rotSpeed*delta/satArray[i].width/10);
 					}
 				}
 				raycaster.setFromCamera( mouse, camera );
@@ -273,12 +305,14 @@
 				document.getElementById("container").style.cursor = "";
 				
 				if (intersects.length > 0) {
-					
+					document.getElementById("tabs").innerHTML = intersects[0].object.title;
 					document.getElementById("container").style.cursor = "pointer";
 					if (intersects[0].object.val != currentSelected) {
-						intersects[0].object.material.color.set( colorScheme.hoverOrb );
-						document.getElementById("tabs").innerHTML = "Title";
+						intersects[0].object.material.color.set( intersects[0].object.hoverColor );
+						
 					}
+				} else {
+					document.getElementById( 'tabs' ).innerHTML = originalText;
 				}
 
 				window.addEventListener( 'pointermove', onMouseMove, false );
@@ -300,23 +334,74 @@
 
 			}
 
-			function satellite(width,thickness,value) { //width, thickness
-				const torusSpawn = new THREE.Mesh(new THREE.TorusGeometry(width,thickness/10,25,40),new THREE.MeshBasicMaterial( { color: colorScheme.standingOrb, transparent: true, opacity: 0.2} ));
+
+			function updateInfo(project,topic) {
+				document.getElementById("info").style.display = "block";
+				if (topic == "design") {
+					document.getElementById("title").innerHTML = data.design[project].title;
+					document.getElementById("desc").innerHTML = data.design[project].description;
+					document.getElementById("client").innerHTML = data.design[project].client;
+					document.getElementById("roles").innerHTML = data.design[project].role;
+				}
+				else if (topic == "development") {
+					document.getElementById("title").innerHTML = data.development[project-data.design.length].title;
+					document.getElementById("desc").innerHTML = data.development[project-data.design.length].description;
+					document.getElementById("client").innerHTML = data.development[project-data.design.length].client;
+					document.getElementById("roles").innerHTML = data.development[project-data.design.length].role;
+				}
+				
+
+			}
+
+			function satellite(value,topic) { //width, thickness
+				let width;
+				let thickness;
+				let torusMat;
+				let orbMat;
+				let colorer;
+				let hoverCol;
+				let overallValue;
+				let title;
+				if (topic == "design") {
+					width = data.design[value].radius;
+					thickness = data.design[value].importance;
+					colorer = colorScheme.standingOrbDes;
+					hoverCol = colorScheme.hoverOrbDes;
+					overallValue = value;
+					title = data.design[value].title;
+				}
+				else if (topic == "development") {
+					width = data.development[value].radius;
+					thickness = data.development[value].importance;
+					colorer = colorScheme.standingOrbDev;
+					hoverCol = colorScheme.hoverOrbDev;
+					overallValue = value+data.design.length;
+					title = data.development[value].title;
+				}
+				torusMat = new THREE.MeshBasicMaterial( { color: colorer, transparent: true, opacity: 0.2});
+				orbMat = new THREE.MeshBasicMaterial( { color: colorer });
+				const torusSpawn = new THREE.Mesh(new THREE.TorusGeometry(width,thickness/10,25,40),torusMat );
 				torusSpawn.rotateX(Math.PI/2);
-				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(thickness,32,32),new THREE.MeshBasicMaterial( { color: colorScheme.standingOrb } ));
+				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(thickness,32,32), orbMat);
 				orbitSpawn.position.set(width,0,0);
 				orbitSpawn.layers.enable( 1 );
-				orbitSpawn.val = value;
-				
+				orbitSpawn.val = overallValue;
+				orbitSpawn.title = title;
+				orbitSpawn.hoverColor = hoverCol;
+				orbitSpawn.topic = topic;
 				orbitArray.push(orbitSpawn);
 				const group = new THREE.Group();
 				group.rotateY(Math.random()*6);
+				group.rotateX(Math.random()/2);
 				group.add( torusSpawn );
 				group.add( orbitSpawn );
+				group.width = width;
+				group.originalColor = colorer;
 				group.layers.enable( 1 );
 				satArray.push(group);
 				scene.add( group );				
 			}
+
 			document.getElementById("closer").addEventListener("click", close);
 			document.getElementById("tutorial").onselectstart = function () { return false; }
 		</script>
