@@ -378,7 +378,7 @@
 					overallValue = value+data.design.length;
 					title = data.development[value].title;
 				}
-				torusMat = new THREE.MeshBasicMaterial( { color: colorer, transparent: true, opacity: 0.15});
+				torusMat = new THREE.MeshBasicMaterial( { color: colorer, transparent: true, opacity: 0.1});
 				orbMat = new THREE.MeshBasicMaterial( { color: colorer });
 				const torusSpawn = new THREE.Mesh(new THREE.TorusGeometry(width,thickness/20,25,40),torusMat );
 				torusSpawn.rotateX(Math.PI/2);
