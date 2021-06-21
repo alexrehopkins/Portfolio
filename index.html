@@ -25,8 +25,6 @@
 			<h2 id="client">Want to collaborate? <a href="https://www.linkedin.com/in/ahop/">Find me here</a> Or <a href="alexrehopkins@gmail.com">contact me</a></h2>
 		</div>
 
-		<img id="tutorial" src="pics/pointer.png">
-
 		<div id="container"></div>
 
 		<script type="module">
@@ -36,9 +34,6 @@
 			import { EffectComposer } from '/EffectComposer.js';
 			import { RenderPass } from '/RenderPass.js';
 			import { UnrealBloomPass } from '/UnrealBloomPass.js';
-
-			import {ShaderPass} from '/ShaderPass.js';
-
 			
 
 			const colorScheme = {
@@ -59,15 +54,10 @@
 			}
 
 			let camera, stats;
-			let composer, renderer, mixer, clock;
+			let composer, renderer, clock;
 
-			let geometry, material, line, wireframe;
 			let controls;
 			let mouse, raycaster;
-			let mousedowned = false;
-
-			let shinies = [];
-
 			let originalText, originalTitle, originalDesc, originalImg, originalRoles, originalClient;
 
 			let currentSelected = -1;
@@ -78,32 +68,15 @@
 
 			let timer;
 
-			let satArray = [];
-			let orbitArray = [];
-
-			let values = [
-				{
-					width: 2.5,
-					size: 0.05
-				},
-				{
-					width: 3,
-					size: 0.2
-				},
-				{
-					width: 4,
-					size: 0.15
-				},
-				{
-					width: 5,
-					size: 0.1
-				}
-			];
-
 			let particleGeo, vertices, sprite, particles, particleMat;
 			let scene;
 
-			
+			//new objects
+			let grid;
+			let tracker = 0;
+
+			let torusArray = [];
+
 
 			const params = {
 				exposure: 1,
@@ -113,49 +86,6 @@
 			};
 
 			init();
-
-
-			
-
-			function onMouseMove( event ) {
-
-				// calculate mouse position in normalized device coordinates
-				// (-1 to +1) for both components
-
-				mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-
-			}
-
-			function onMouseDown( event ) {
-				raycaster.setFromCamera( mouse, camera );
-				const intersects = raycaster.intersectObjects( scene.children,true );
-				if (intersects.length > 0) {
-					if (intersects[0].object.val == -10) {
-						controls.enabled = false;
-						document.getElementById( 'title' ).innerHTML = originalTitle;
-						document.getElementById( 'client' ).innerHTML = originalClient;
-						document.getElementById( 'desc' ).innerHTML = originalDesc;
-						document.getElementById( 'pic' ).src = originalImg;
-						document.getElementById( 'roles' ).innerHTML = originalRoles;
-						document.getElementById("info").style.display = "block";
-						document.getElementById("tutorial").style.display = "none";
-					}
-					if (intersects[0].object.val != currentSelected) {
-						controls.enabled = false;
-						currentSelected = intersects[0].object.val;
-						updateInfo(intersects[0].object.val,intersects[0].object.topic);
-					}
-				}
-			}
-
-			function onMouseUp( event ) {
-				
-				controls.enabled = true;
-			}
-
-
-
 
 			function close() {
 				document.getElementById("info").style.display = "none";
@@ -175,25 +105,15 @@
 				})
 				.then(database => {
 					data = database;
-					for (let i = 0; i < data.design.length; i++) {
-						satellite(i,"design");//width,thickness
-					}
-					for (let i = 0; i < data.development.length; i++) {
-						satellite(i,"development");//width,thickness
-					}
+					console.log(data);
 					animate();
 				});
 
-				raycaster = new THREE.Raycaster();
-				raycaster.layers.set( 1 );
-				mouse = new THREE.Vector2();
-				mouse.x = -10000;
-				mouse.y = -10000;
 				const container = document.getElementById( 'container' );
 
 				clock = new THREE.Clock();
 
-				renderer = new THREE.WebGLRenderer( { antialias: false } );
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				renderer.toneMapping = THREE.ReinhardToneMapping;
@@ -229,109 +149,91 @@
 				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 0.01, 100 );
 				camera.position.set( 0, 14, 0 );
 				scene.add( camera );
-				//scene.fog = new THREE.Fog(0x00ffff, 0.1, 20);
+				scene.fog = new THREE.Fog(0x04060b, 10, 45);
 
 				controls = new OrbitControls( camera, renderer.domElement );
 				controls.maxPolarAngle = Math.PI * 0.5;
 				controls.minDistance = 4;
 				controls.maxDistance = 24;
 				controls.enablePan = false;
-
-				scene.add( new THREE.AmbientLight( 0x404040 ) );
-
+				scene.add( new THREE.AmbientLight( 0x404040 ,1 ) );
 				const pointLight = new THREE.PointLight( 0xffffff, 1 );
 				camera.add( pointLight );
-
 				const renderScene = new RenderPass( scene, camera );
-
 				const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
 				bloomPass.threshold = params.bloomThreshold;
 				bloomPass.strength = params.bloomStrength;
 				bloomPass.radius = params.bloomRadius;
-
 				composer = new EffectComposer( renderer );
 				composer.addPass( renderScene );
 				composer.addPass( bloomPass );
 				
 
 				//objects
-				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(0.7,32,32),new THREE.MeshBasicMaterial( { color: colorScheme.sunOrb } ));
-				for (let i = 0; i < variables.sunbeamCount; i++) {
-					shinies[i] = new THREE.Mesh(new THREE.SphereGeometry(1,32,32),new THREE.MeshBasicMaterial( { color: colorScheme.sunOrb} ));
-					scene.add(shinies[i]);
+				/*
+				let material = new THREE.LineBasicMaterial( { color: 0xc430ff } );
+				const points = [];
+				
+				for (let i = 1; i < 100; i++) {
+					points.push( new THREE.Vector3( i-50, 0, -50 ) );
+					points.push( new THREE.Vector3( i-50, 0, 50 ) );
+					points.push( new THREE.Vector3( i+1-50, 0, 50 ) );
 				}
-				orbitSpawn.layers.enable( 1 );
-				orbitSpawn.val = -10;
-				orbitSpawn.title = "Introduction";
-				scene.add(orbitSpawn);
-				
-				
-				window.addEventListener( 'resize', onWindowResize );
+				points.push( new THREE.Vector3( 50, 0, -50) );
+				for (let i = 1; i < 100; i++) {
+					points.push( new THREE.Vector3( -50, 0, i-50) );
+					points.push( new THREE.Vector3( 50, 0, i-50) );
+					points.push( new THREE.Vector3( 50, 0, i+1-50) );
+				}
+				let geometry = new THREE.BufferGeometry().setFromPoints( points );
+				grid = new THREE.Line( geometry, material );
+				scene.add(grid);
+				*/
+				for (let i = 0; i < 50; i++) {
+					torusMaker(Math.random()*20-10,Math.random()/15,Math.random()*10, i)
+				}
 
+				//sun
+
+				//event
+				window.addEventListener( 'resize', onWindowResize );
 			}
 
-			function onWindowResize() {
 
+			function torusMaker(position, size, radius, which) {
+				let material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+				let geometry = new THREE.TorusGeometry( radius, size, 16, 100, Math.random()*7 );
+				let torus = new THREE.Mesh( geometry, material );
+				torus.rotateZ(6*Math.random());
+				torus.position.set(0,0,position);
+				torus.speed = radius;
+				torusArray[which] = (torus);
+				scene.add( torusArray[which] );
+			}
+
+
+			function onWindowResize() {
 				const width = window.innerWidth;
 				const height = window.innerHeight;
-
 				camera.aspect = width / height;
 				camera.updateProjectionMatrix();
-
 				renderer.setSize( width, height );
 				composer.setSize( width, height );
-
 			}
 
 			function animate() {
 				const delta = clock.getDelta();
-				for (let i = 0; i < satArray.length; i++) {
-					satArray[i].rotateY(-variables.rotSpeed*delta/satArray[i].width);
-					if (orbitArray[i].material.color != satArray[i].originalColor) {
-						orbitArray[i].material.color.set(satArray[i].originalColor);
-					}
-					if (i == currentSelected && orbitArray[i].material.color != colorScheme.clickedOrb) {
-						orbitArray[i].material.color.set(colorScheme.clickedOrb);
-					}
-					if (mode == -1) {
-						satArray[i].position.y = -values[i].width+1;
-					}
-					else {
-						satArray[i].rotateX(variables.rotSpeed*delta/satArray[i].width/10);
-					}
+				tracker += 2;
+				if (tracker > 100) {
+					tracker = 0;
 				}
-				raycaster.setFromCamera( mouse, camera );
-				const intersects = raycaster.intersectObjects( scene.children,true );
-				document.getElementById("container").style.cursor = "";
-				
-				if (intersects.length > 0) {
-					document.getElementById("tabs").innerHTML = intersects[0].object.title;
-					document.getElementById("container").style.cursor = "pointer";
-					if (intersects[0].object.val != currentSelected) {
-						intersects[0].object.material.color.set( intersects[0].object.hoverColor );
-						
-					}
-				} else {
-					document.getElementById( 'tabs' ).innerHTML = originalText;
+				particles.rotateZ(delta/5);
+				for (let i = 0; i < torusArray.length; i++) {
+					torusArray[i].rotateZ(delta/torusArray[i].speed);
 				}
-
-				window.addEventListener( 'pointermove', onMouseMove, false );
-				window.addEventListener( 'pointerdown', onMouseDown, false );
-				window.addEventListener( 'pointerup', onMouseUp, false );
-
 				requestAnimationFrame( animate );
 				controls.update();
-				
-				for (let i = 0; i < shinies.length; i++) { 
-					shinies[i].rotateY(delta/(i+1)*variables.sunBeamSpeed);
-					shinies[i].rotateZ(delta/(i+1)*variables.sunBeamSpeed);
-					shinies[i].rotateX(delta/(i+1)*variables.sunBeamSpeed);
-					shinies[i].scale.set((i+1),(i+1)/300,(i+1)/300);
-				}
-				particles.rotateY(delta*variables.particleSpeed);
-				particles.rotateX(delta*variables.particleSpeed/4);
 				composer.render();
-
 			}
 
 
@@ -352,7 +254,7 @@
 				
 
 			}
-
+			/*
 			function satellite(value,topic) { //width, thickness
 				let width;
 				let thickness;
@@ -378,7 +280,7 @@
 					overallValue = value+data.design.length;
 					title = data.development[value].title;
 				}
-				torusMat = new THREE.MeshBasicMaterial( { color: colorer, transparent: true, opacity: 0.1});
+				torusMat = new THREE.MeshBasicMaterial( { color: colorer, transparent: true, opacity: 0.2});
 				orbMat = new THREE.MeshBasicMaterial( { color: colorer });
 				const torusSpawn = new THREE.Mesh(new THREE.TorusGeometry(width,thickness/20,25,40),torusMat );
 				torusSpawn.rotateX(Math.PI/2);
@@ -401,9 +303,8 @@
 				satArray.push(group);
 				scene.add( group );				
 			}
-
+			*/
 			document.getElementById("closer").addEventListener("click", close);
-			document.getElementById("tutorial").onselectstart = function () { return false; }
 		</script>
 	</body>
 </html>
