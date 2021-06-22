@@ -11,26 +11,30 @@
 		</style>
 	</head>
 	<body>
+		<canvas id="viewport"></canvas>
+		<div id="div1" class="page-wrapper" >
+			<h1 id="name" style="left: 30px"><a style="text-decoration: none; color: aliceblue;" href="https://www.linkedin.com/in/ahop/">ALEX HOPKINS</a></h1>
 
-		<h1 id="name" style="left: 30px"><a style="text-decoration: none; color: aliceblue;" href="https://www.linkedin.com/in/ahop/">ALEX HOPKINS</a></h1>
 
-		<h1 id="tabs" style="right: 30px"><span style="color: rgb(115, 255, 255);">DESIGN</span> - <span style="color: rgb(191, 142, 255);">DEVELOPMENT</span></h1>
+			<h1 id="">Hi</h1>
+			<p id="">Digital Designer with a passion for JavaScript and creative coding, based in Bristol</p>
+			<h2 id="">Want to collaborate? <a href="https://www.linkedin.com/in/ahop/">Find me here</a> Or contact me at <a href="mailto:alexrehopkins@gmail.com">alexrehopkins@gmail.com</a></h2>
 
-		<div id="info">
-			<h1 id="closer">X</h1>
-			<h1 id="title">Hi</h1>
-			<p id="desc">I'm an emerging visual creative with a background in maths and code, based in Bristol</p>
-			<img id="pic" src="pics/help.png">
-			<h2 id="roles">Click on the small orbs to check out my projects, the purple ones are design projects (user experience, graphics, etc) and the green are development projects (frontend, javascript games, etc)</h2>
-			<h2 id="client">Want to collaborate? <a href="https://www.linkedin.com/in/ahop/">Find me here</a> Or <a href="alexrehopkins@gmail.com">contact me</a></h2>
+			<h1>PROJECTS</h1>
+			<h1>Sort by:</h1>
+			<button>Design</button>
+			<button>Development</button>
+			<button>Self Led Projects</button>
+			<button>Client Work</button>
+			<div id="experience">
+
+			</div>
 		</div>
 
-		<div id="container"></div>
 
 		<script type="module">
 
 			import * as THREE from '/three.module.js';
-			import { OrbitControls } from '/OrbitControls.js';
 			import { EffectComposer } from '/EffectComposer.js';
 			import { RenderPass } from '/RenderPass.js';
 			import { UnrealBloomPass } from '/UnrealBloomPass.js';
@@ -46,17 +50,8 @@
 				sunOrb: 0x69d9ef
 			};
 
-			const variables = {
-				rotSpeed: 0.3,
-				sunBeamSpeed: 1,
-				particleSpeed: 1/8,
-				sunbeamCount: 3
-			}
-
 			let camera, stats;
 			let composer, renderer, clock;
-
-			let controls;
 			let mouse, raycaster;
 			let originalText, originalTitle, originalDesc, originalImg, originalRoles, originalClient;
 
@@ -81,23 +76,13 @@
 			const params = {
 				exposure: 1,
 				bloomStrength: 1,
-				bloomThreshold: 0,
+				bloomThreshold: 0.1,
 				bloomRadius: 0
 			};
 
 			init();
 
-			function close() {
-				document.getElementById("info").style.display = "none";
-			}
-
 			function init() {
-				originalText = document.getElementById( 'tabs' ).innerHTML;
-				originalTitle = document.getElementById( 'title' ).innerHTML;
-				originalClient = document.getElementById( 'client' ).innerHTML;
-				originalDesc = document.getElementById( 'desc' ).innerHTML;
-				originalImg = document.getElementById( 'pic' ).src;
-				originalRoles = document.getElementById( 'roles' ).innerHTML;
 				//import project data
 				fetch("/Projects.json")
 				.then(response => {
@@ -107,17 +92,21 @@
 					data = database;
 					console.log(data);
 					animate();
+					for (let i = 0; i < data.experience.length; i++){
+						formatter(i);
+					}
+					
 				});
 
-				const container = document.getElementById( 'container' );
+				//const container = document.getElementById( 'container' );
 
 				clock = new THREE.Clock();
 
-				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer = new THREE.WebGLRenderer( { antialias: true, canvas: document.getElementById("viewport") } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				renderer.toneMapping = THREE.ReinhardToneMapping;
-				container.appendChild( renderer.domElement );
+				
 				
 				scene = new THREE.Scene();
 
@@ -129,16 +118,17 @@
 
 
 				for ( let i = 0; i < 2000; i ++ ) {
-					const x = 40 * (Math.random() - 0.5);
-					const y = 40 * (Math.random() - 0.5);
-					const z = 40 *(Math.random() - 0.5);
+					const x = 100 * (Math.random() - 0.5);
+					const y = 100 * (Math.random() - 0.5);
+					const z = 100 *(Math.random() - 0.5);
 
 					vertices.push( x, y, z );
 				}
 				particleGeo.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
-				particleMat = new THREE.PointsMaterial( { size: 0.2, sizeAttenuation: true, map: sprite, alphaTest: 0.5, transparent: true } );
+				particleMat = new THREE.PointsMaterial( { size: 0.5, sizeAttenuation: true, map: sprite, alphaTest: 0.5, transparent: true } );
 				particleMat.color.setHSL( 1.0, 0.3, 0.7 );
 				particles = new THREE.Points( particleGeo, particleMat );
+				particles.position.set(0,15,0);
 				scene.add(particles);
 				scene.background = new THREE.Color( colorScheme.background );
 				
@@ -146,17 +136,14 @@
 				
 				//camera
 
-				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 0.01, 100 );
-				camera.position.set( 0, 14, 0 );
+				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 5, 150 );
+				camera.position.set( 0, 0, 20 );
+				camera.lookAt(0, 0, 0);
+				updateCamera();
 				scene.add( camera );
-				scene.fog = new THREE.Fog(0x04060b, 10, 45);
+				//scene.fog = new THREE.Fog(0x04060b, 20, 45);
 
-				controls = new OrbitControls( camera, renderer.domElement );
-				controls.maxPolarAngle = Math.PI * 0.5;
-				controls.minDistance = 4;
-				controls.maxDistance = 24;
-				controls.enablePan = false;
-				scene.add( new THREE.AmbientLight( 0x404040 ,1 ) );
+				scene.add( new THREE.AmbientLight( 0xffffff , 1 ) );
 				const pointLight = new THREE.PointLight( 0xffffff, 1 );
 				camera.add( pointLight );
 				const renderScene = new RenderPass( scene, camera );
@@ -168,40 +155,27 @@
 				composer.addPass( renderScene );
 				composer.addPass( bloomPass );
 				
-
-				//objects
-				/*
-				let material = new THREE.LineBasicMaterial( { color: 0xc430ff } );
-				const points = [];
-				
-				for (let i = 1; i < 100; i++) {
-					points.push( new THREE.Vector3( i-50, 0, -50 ) );
-					points.push( new THREE.Vector3( i-50, 0, 50 ) );
-					points.push( new THREE.Vector3( i+1-50, 0, 50 ) );
-				}
-				points.push( new THREE.Vector3( 50, 0, -50) );
-				for (let i = 1; i < 100; i++) {
-					points.push( new THREE.Vector3( -50, 0, i-50) );
-					points.push( new THREE.Vector3( 50, 0, i-50) );
-					points.push( new THREE.Vector3( 50, 0, i+1-50) );
-				}
-				let geometry = new THREE.BufferGeometry().setFromPoints( points );
-				grid = new THREE.Line( geometry, material );
-				scene.add(grid);
-				*/
-				for (let i = 0; i < 50; i++) {
-					torusMaker(Math.random()*20-10,Math.random()/15,Math.random()*10, i)
+				for (let i = 0; i < 100; i++) {
+					torusMaker(Math.random()*110-55,0.01+(Math.random()/10),1+Math.random()*10, i)
 				}
 
 				//sun
 
-				//event
+
+				function updateCamera(ev) {
+					let div1 = document.getElementById("div1");
+					camera.position.y = 0 - window.scrollY / 100.0;
+					camera.position.x = 0 + window.scrollY / 200.0;
+					camera.lookAt(0,0,0);
+				}
+
+				window.addEventListener("scroll", updateCamera);
 				window.addEventListener( 'resize', onWindowResize );
 			}
 
 
 			function torusMaker(position, size, radius, which) {
-				let material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+				let material = new THREE.MeshBasicMaterial( { color: "hsl("+size*2000+", 100%, 50%)" } );
 				let geometry = new THREE.TorusGeometry( radius, size, 16, 100, Math.random()*7 );
 				let torus = new THREE.Mesh( geometry, material );
 				torus.rotateZ(6*Math.random());
@@ -227,84 +201,29 @@
 				if (tracker > 100) {
 					tracker = 0;
 				}
-				particles.rotateZ(delta/5);
+				particles.rotateX(-delta/5);
 				for (let i = 0; i < torusArray.length; i++) {
 					torusArray[i].rotateZ(delta/torusArray[i].speed);
 				}
 				requestAnimationFrame( animate );
-				controls.update();
 				composer.render();
 			}
 
-
-			function updateInfo(project,topic) {
-				document.getElementById("info").style.display = "block";
-				if (topic == "design") {
-					document.getElementById("title").innerHTML = data.design[project].title;
-					document.getElementById("desc").innerHTML = data.design[project].description;
-					document.getElementById("client").innerHTML = data.design[project].client;
-					document.getElementById("roles").innerHTML = data.design[project].role;
-				}
-				else if (topic == "development") {
-					document.getElementById("title").innerHTML = data.development[project-data.design.length].title;
-					document.getElementById("desc").innerHTML = data.development[project-data.design.length].description;
-					document.getElementById("client").innerHTML = data.development[project-data.design.length].client;
-					document.getElementById("roles").innerHTML = data.development[project-data.design.length].role;
-				}
-				
-
+			function formatter(which) {
+				createEle(data.experience[which].title,"h1");
+				createEle(data.experience[which].roles,"h2");
+				createEle(data.experience[which].description,"p");
+				createEle(data.experience[which].client,"h2");
+				createEle(data.experience[which].date,"h3");
+				createEle("<br>","h");
 			}
-			/*
-			function satellite(value,topic) { //width, thickness
-				let width;
-				let thickness;
-				let torusMat;
-				let orbMat;
-				let colorer;
-				let hoverCol;
-				let overallValue;
-				let title;
-				if (topic == "design") {
-					width = data.design[value].radius;
-					thickness = data.design[value].importance;
-					colorer = colorScheme.standingOrbDes;
-					hoverCol = colorScheme.hoverOrbDes;
-					overallValue = value;
-					title = data.design[value].title;
-				}
-				else if (topic == "development") {
-					width = data.development[value].radius;
-					thickness = data.development[value].importance;
-					colorer = colorScheme.standingOrbDev;
-					hoverCol = colorScheme.hoverOrbDev;
-					overallValue = value+data.design.length;
-					title = data.development[value].title;
-				}
-				torusMat = new THREE.MeshBasicMaterial( { color: colorer, transparent: true, opacity: 0.2});
-				orbMat = new THREE.MeshBasicMaterial( { color: colorer });
-				const torusSpawn = new THREE.Mesh(new THREE.TorusGeometry(width,thickness/20,25,40),torusMat );
-				torusSpawn.rotateX(Math.PI/2);
-				const orbitSpawn = new THREE.Mesh(new THREE.SphereGeometry(thickness,32,32), orbMat);
-				orbitSpawn.position.set(width,0,0);
-				orbitSpawn.layers.enable( 1 );
-				orbitSpawn.val = overallValue;
-				orbitSpawn.title = title;
-				orbitSpawn.hoverColor = hoverCol;
-				orbitSpawn.topic = topic;
-				orbitArray.push(orbitSpawn);
-				const group = new THREE.Group();
-				group.rotateY(Math.random()*6);
-				group.rotateX(Math.random()/2);
-				group.add( torusSpawn );
-				group.add( orbitSpawn );
-				group.width = width;
-				group.originalColor = colorer;
-				group.layers.enable( 1 );
-				satArray.push(group);
-				scene.add( group );				
+
+			function createEle(target, htmlSetting) {
+				let title = document.createElement(htmlSetting);
+				let node = document.createTextNode(target);
+				title.appendChild(node);
+				document.getElementById("experience").appendChild(title);
 			}
-			*/
-			document.getElementById("closer").addEventListener("click", close);
 		</script>
 	</body>
 </html>
