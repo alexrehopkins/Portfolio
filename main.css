@@ -9,10 +9,34 @@ html, body {
     margin: 0;
 }
 
+#pagegap {
+    height: 70vh;
+}
+
 p, h1, h2, h3 {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Helvetica', sans-serif;
     color: white;
     padding: 8px;
+    font-weight: lighter;
+    text-shadow: black 0px 0px 20px, black 0px 0px 20px,black 0px 0px 20px, black 0px 0px 20px,black 0px 0px 20px, black 0px 0px 20px;
+}
+
+h1 {
+    font-size: 60px;
+    color: white !important;
+}
+
+h2 {
+    font-size: 40px;
+    color: white !important;
+}
+
+h3 {
+    color: white !important;
+}
+
+p {
+    font-size: 20px;
 }
 
 a {
@@ -22,8 +46,7 @@ a {
 #name {
     margin: 0px;
     font-size: 3vw;
-    font-family: 'Lato', sans-serif;
-    font-weight: lighter;
+
     color: rgb(255, 255, 255);
     /* text-shadow: rgb(0, 255, 255) 0px 0px 20px; */
 }

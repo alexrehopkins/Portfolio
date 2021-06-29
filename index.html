@@ -6,28 +6,31 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link type="text/css" rel="stylesheet" href="main.css">
 		<link rel="icon" href="/favicon.ico?v=2" type="image/x-icon" />
-		<style>
-
-		</style>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	</head>
 	<body>
 		<canvas id="viewport"></canvas>
 		<div id="div1" class="page-wrapper" >
+			<div id="pagegap"></div>
 			<h1 id="name" style="left: 30px"><a style="text-decoration: none; color: aliceblue;" href="https://www.linkedin.com/in/ahop/">ALEX HOPKINS</a></h1>
 
 
-			<h1 id="">Hi</h1>
-			<p id="">Digital Designer with a passion for JavaScript and creative coding, based in Bristol</p>
-			<h2 id="">Want to collaborate? <a href="https://www.linkedin.com/in/ahop/">Find me here</a> Or contact me at <a href="mailto:alexrehopkins@gmail.com">alexrehopkins@gmail.com</a></h2>
+			<h2>Digital Designer with a passion for creative coding, based in Bristol</h2>
+			<h3>Want to collaborate? <a href="https://www.linkedin.com/in/ahop/">Find me here</a> Or contact me at <a href="mailto:alexrehopkins@gmail.com">alexrehopkins@gmail.com</a></h2>
+			<div id="pagegap"></div>
+			<h1 style="text-align: center;">PROJECTS</h1>
+			<div id="pagegap"></div>
+			<div class="container-fluid">
+				<h2>Sort by:</h2>
+				<button>Design</button>
+				<button>Development</button>
+				<button>Self Led Projects</button>
+				<button>Client Work</button>
+				<div id="experience">
 
-			<h1>PROJECTS</h1>
-			<h1>Sort by:</h1>
-			<button>Design</button>
-			<button>Development</button>
-			<button>Self Led Projects</button>
-			<button>Client Work</button>
-			<div id="experience">
-
+				</div>
 			</div>
 		</div>
 
@@ -141,7 +144,7 @@
 				camera.lookAt(0, 0, 0);
 				updateCamera();
 				scene.add( camera );
-				//scene.fog = new THREE.Fog(0x04060b, 20, 45);
+				scene.fog = new THREE.Fog(0x04060b, 20, 125);
 
 				scene.add( new THREE.AmbientLight( 0xffffff , 1 ) );
 				const pointLight = new THREE.PointLight( 0xffffff, 1 );
@@ -164,9 +167,10 @@
 
 				function updateCamera(ev) {
 					let div1 = document.getElementById("div1");
-					camera.position.y = 0 - window.scrollY / 100.0;
-					camera.position.x = 0 + window.scrollY / 200.0;
-					camera.lookAt(0,0,0);
+					//camera.position.y = 0 - window.scrollY / 100.0;
+					camera.position.y = 0 + window.scrollY / 200.0;
+					camera.lookAt(-window.scrollY/500,0,0);
+
 				}
 
 				window.addEventListener("scroll", updateCamera);
@@ -211,16 +215,22 @@
 
 			function formatter(which) {
 				createEle(data.experience[which].title,"h1");
-				createEle(data.experience[which].roles,"h2");
+				createEle(data.experience[which].roles,"h2","Roles: ");
 				createEle(data.experience[which].description,"p");
-				createEle(data.experience[which].client,"h2");
+				createEle(data.experience[which].client,"h2","Client: ");
 				createEle(data.experience[which].date,"h3");
-				createEle("<br>","h");
+				//break
+				let title = document.createElement("hr");
+				document.getElementById("experience").appendChild(title);
+
 			}
 
-			function createEle(target, htmlSetting) {
+			function createEle(target, htmlSetting, definer) {
 				let title = document.createElement(htmlSetting);
 				let node = document.createTextNode(target);
+				if (definer) {
+					title.appendChild(document.createTextNode(definer));
+				}
 				title.appendChild(node);
 				document.getElementById("experience").appendChild(title);
 			}
