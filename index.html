@@ -18,11 +18,11 @@
 
 			<h2>Digital Designer with a passion for creative coding, based in Bristol</h2>
 			<h2>Want to collaborate? <a href="https://www.linkedin.com/in/ahop/">Find me here</a> Or contact me at <a href="mailto:alexrehopkins@gmail.com">alexrehopkins@gmail.com</a></h2>
-			<h2>Scroll Down to see some of my works</h2>
+			<a id="scroller" href="#works">⟱ Scroll ⟱</a>
 			<div id="pagegap"></div>
 			<div id="pagegap"></div>
 			
-			<h2>SHOW ONLY:</h2>
+			<h2 id="works">SHOW ONLY:</h2>
 			
 			<button id="per">PERSONAL PROJECTS</button>
 			<button id="cli">CLIENT WORK</button>
@@ -33,7 +33,12 @@
 			<div id="experience">
 
 			</div>
-			<div id="pagegap"></div>
+			<hr style="margin:5%">
+			<p></p>
+			<div id="pagegap" style="height: 20vh;">
+				<a id="scroller" href="#name">⟰ Scroll ⟰</a>
+			</div>
+			
 		</div>
 
 
@@ -250,10 +255,11 @@
 				
 				//image end
 				createEle(data.experience[which].title,"h1","", holder);
-				createEle(data.experience[which].roles,"h2","Roles: ", holder);
-				createEle(data.experience[which].description,"p","" , holder);
-				createEle(data.experience[which].client,"h2","Client: ", holder);
 				createEle(data.experience[which].date,"h3","" , holder);
+				createEle(data.experience[which].client,"h2","Client: ", holder);
+				createEle(data.experience[which].description,"p","" , holder);
+				createEle(data.experience[which].roles,"h2","Roles: ", holder);
+				
 				if (data.experience[which].linkURL) {createEle(data.experience[which].linkURL,"h3","Link: ", holder);}
 				if (data.experience[which].linkDOC) {createEle(data.experience[which].linkDOC,"h3","Documentation: ", holder);}
 				if (data.experience[which].linkYT) {createEle(data.experience[which].linkYT,"h3","Youtube: ", holder);}
@@ -277,18 +283,34 @@
 
 			function perSort() {
 				zoom("pers","clie");
+				document.getElementById("per").style.background = "#9ec200";
+				document.getElementById("cli").style.background = "black";
+				document.getElementById("des").style.background = "black";
+				document.getElementById("dev").style.background = "black";
 			}
 
 			function cliSort() {
 				zoom("clie","pers");
+				document.getElementById("per").style.background = "black";
+				document.getElementById("cli").style.background = "#ba8200";
+				document.getElementById("des").style.background = "black";
+				document.getElementById("dev").style.background = "black";
 			}
 
 			function desSort() {
 				zoom("des","dev");
+				document.getElementById("per").style.background = "black";
+				document.getElementById("cli").style.background = "black";
+				document.getElementById("des").style.background = "#0074c2";
+				document.getElementById("dev").style.background = "black";
 			}
 
 			function devSort() {
 				zoom("dev","des");
+				document.getElementById("per").style.background = "black";
+				document.getElementById("cli").style.background = "black";
+				document.getElementById("des").style.background = "black";
+				document.getElementById("dev").style.background = "#00ba63";
 			}
 
 			document.getElementById("per").addEventListener("click", perSort, false);
