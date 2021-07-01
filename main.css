@@ -13,6 +13,22 @@ html, body {
     height: 70vh;
 }
 
+button {
+    background-color: black;
+    color: white;
+    border: 3px solid white;
+    font-size: 25px;
+    padding: 0.7%;
+    cursor: pointer;
+    border-radius: 20px;
+    transition-duration: 0.4s;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+}
+
 p, h1, h2, h3 {
     font-family: 'Helvetica', sans-serif;
     color: white;
@@ -40,7 +56,7 @@ p {
 }
 
 a {
-    color: #69d9ef;
+    color: #69d9ef !important;
 }
 
 #name {
@@ -51,6 +67,27 @@ a {
     /* text-shadow: rgb(0, 255, 255) 0px 0px 20px; */
 }
 
+img {
+    width: 500px;
+    max-width: 90%;
+    /*box-shadow: aliceblue -30px 30px;*/
+    z-index: 3;
+    float: right;
+    padding: 10px;
+    border-radius: 20px;
+    
+}
+
+#row {
+    min-height: 770px;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+#row p {
+    max-width: 700px;
+    font-size: 24px;
+}
 
 
 #viewport {
@@ -64,11 +101,11 @@ a {
 }
 .page-wrapper {
     padding: 0px;
-    margin: 12px 48px;
+    margin: 0px;
     position: absolute;
     left: 0;
     top: 0;
-    width: calc(100% - 2*48px);
+    width: calc(100%);
     word-wrap: break-word;
 }
 

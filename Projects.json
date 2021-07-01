@@ -1,16 +1,30 @@
 {
     "experience": [
         {
+            "title":"The Burning Reef",
+            "date":"September 2020 - June 2021",
+            "description":"My final project dissertation for (Bsc) Digital Media at UWE. An interactive narative driven audio-visual experience for the web, generated using Three.JS to procedurally generate in WebGL the dynamic environment. The project is an exploration into the effects of a dynamic ambience meant to demonstrate the effects of ocean degradation and elicit and emotional response from users while they explore and collect artefacts that reveal information about the causes of the degrading oceans. The aim of the project is to discover if by eliciting an emotional response, users are more willing to change their lifestyle or opinion of ocean degradation. Effectiveness of the project is measured by user research findings, which proved it to be effective at elliciting an emotional response.",
+            "roles":"Javascript Developer, 3D Artist and User Experience Designer",
+            "client":"Self Led",
+            "images":"burningreef.gif",
+            "linkYT":"https://youtu.be/JIOuXj2So3w",
+            "linkURL":"https://burningreef.netlify.app/",
+            "linkDOC":"https://drive.google.com/file/d/1m-I61_6AdRpabKG07wqvPNwEGbC8yUC_/view?usp=sharing",
+            "linkGIT":"https://github.com/alexrehopkins/burning_reef",
+            "importance":0.6,
+            "topic":"dev"
+        },
+        {
             "title":"Critical Eye",
             "date":"October 2020 - Current",
             "description":"Creating media, imagery, logos, iconography and working on web prototypes for the Critical Eye image archival website project. Critical Eye: Visual Archives for Education will provide a platform for schools and museums to use for education through the use of guides and a visual archive of user responses. My responsibilities also included providing user research, design research and branding feedback for use by the IC: Visual Labs Team.",
             "roles":"User Experience Designer",
             "client":"IC: Visual Lab",
-            "images":"",
-            "link":"https://icvl.co.uk/",
-            "link2":"https://youtu.be/iD3QCPwwIXI",
+            "images":"criticaleye.png",
+            "linkURL":"https://icvl.co.uk/",
+            "linkYT":"https://youtu.be/iD3QCPwwIXI",
             "importance":0.6,
-            "radius":3
+            "topic":"des"
         },
         {
             "title":"SAM-APP for Anxiety",
@@ -18,10 +32,10 @@
             "description":"Using After Effects, Illustrator, Premiere Pro and Photoshop to create assets and then animate them into short videos to encourage positive mental health habits for use on the SAM-App.",
             "roles":"2D Motion Content Creator",
             "client":"SAM",
-            "images":"",
-            "link":"https://sam-app.org.uk/",
+            "images":"samapp.gif",
+            "linkURL":"https://sam-app.org.uk/",
             "importance":0.4,
-            "radius":4
+            "topic":"des"
         },
         {
             "title":"Communicare",
@@ -29,11 +43,11 @@
             "description":"A collaboration mobile app project, creating a social media platform for use by people in care to meet and interact with others in the facility. Prototype made in Invision, documentation and client presentation made with MS Office. User Research took place including interviews of the general public to assist forming user journey maps and personas.",
             "roles":"UX/UI designer, User Researcher",
             "client":"Fruto",
-            "images":"",
-            "link":"https://ux-ola.invisionapp.com/prototype/ckq2v3fqm002ick01g9jso9eb/play",
-            "link2":"https://drive.google.com/file/d/1TuYVC743-ZdBBp2nOxjE8NnzRFpYGU4m/view?usp=sharing",
+            "images":"communicare.png",
+            "linkURL":"https://ux-ola.invisionapp.com/prototype/ckq2v3fqm002ick01g9jso9eb/play",
+            "linkDOC":"https://drive.google.com/file/d/1TuYVC743-ZdBBp2nOxjE8NnzRFpYGU4m/view?usp=sharing",
             "importance":0.2,
-            "radius":2
+            "topic":"des"
         },
         {
             "title":"Flash Flask",
@@ -41,10 +55,10 @@
             "description":"A multimedia project involving designing an original drinking vessel, which could heat the contents up on the go. The work included working on the branding, creating 3D prototypes to then film as part of a infomercial advert and creating accompanying infographics and media to be displayed in a portfolio.",
             "roles":"Film Editor, Graphics Designer, 3D Modelling",
             "client":"Self Led",
-            "images":"",
-            "link":"https://youtu.be/Sqztqz8Mv8w",
+            "images":"flashflask.png",
+            "linkYT":"https://youtu.be/Sqztqz8Mv8w",
             "importance":0.2,
-            "radius":3.5
+            "topic":"des"
         },
         {
             "title":"SCREEN TIME",
@@ -52,21 +66,22 @@
             "description":"A data visualisation project created in After Effects with assets made in Illustrator and sounds made in Ableton Live. The project aims to visualise my screentime habits over time in an engaging way through the user of a narrative.",
             "roles":"2D Motion Artist, Film Editor, Sound Design",
             "client":"Self Led",
-            "images":"",
-            "link":"https://youtu.be/MAgqD-Gi7IY",
+            "images":"screentime.png",
+            "linkYT":"https://youtu.be/MAgqD-Gi7IY",
             "importance":0.15,
-            "radius":1.5
+            "topic":"des"
         },
         {
             "title":"Masque",
             "date":"October 2020 - January 2021",
-            "description":"A short experimental film production shot in my house with a Note 10 Lite phone camera. Post production took place using After Effects for the VFX and Premiere Pro for the general cutting, audio was fine tuned in Audition.",
+            "description":"A short experimental film production shot in my house with a Note 10 Lite phone camera. Post production took place using After Effects for the VFX and Premiere Pro for the general cutting, audio was fine tuned in Audition. If you'd like to see some more of my photography or traditional art check out my instagram @alexrehopkins!",
             "roles":"Photography, Film Editor, VFX Artist, Creative Director",
             "client":"Self Led",
-            "images":"",
-            "link":"https://youtu.be/lNp6I00SDWk",
+            "images":"masque.gif",
+            "linkYT":"https://youtu.be/lNp6I00SDWk",
+            "linkURL":"https://www.instagram.com/alexrehopkins/",
             "importance":0.2,
-            "radius":2.5
+            "topic":"des"
         },
         {
             "title":"Bony Animations",
@@ -74,11 +89,11 @@
             "description":"Multiple short animations made in Maya using a bony rig, created to match the prompts 'Walkcycle' and 'push'.",
             "roles":"3D Environment Artist, 3D Animator",
             "client":"Self Led",
-            "images":"",
-            "link":"https://youtu.be/QovrtO8-w4k",
-            "link2":"https://youtu.be/WTpenClOgtc",
+            "images":"bonyanimations.gif",
+            "linkYT":"https://youtu.be/QovrtO8-w4k",
+            "linkYT2":"https://youtu.be/WTpenClOgtc",
             "importance":0.07,
-            "radius":1.3
+            "topic":"des"
         },
         {
             "title":"LIVE FEED",
@@ -86,36 +101,11 @@
             "description":"A piece of Speculation design aiming to explore how the ownership of media portraying poverty might change given the creation of a system that would give control of the portrayal to those actually in poverty. A 3D interface streaming booth setup in a foodbank and an accompanying app prototype made in Figma allows those in poverty to safely present themselves to the general public through a media streaming platform",
             "roles":"Interaction Designer, UX/UI Designer",
             "client":"Self Led",
-            "images":"",
-            "link":"https://www.figma.com/proto/k68htwqwJV4IibCEnkh39L/LIVE-FEED?node-id=1%3A2&scaling=scale-down&page-id=0%3A1",
-            "link2":"https://www.yumpu.com/s/LeARWq4k3FCaI2J7",
+            "images":"livefeed.png",
+            "linkURL":"https://www.figma.com/proto/k68htwqwJV4IibCEnkh39L/LIVE-FEED?node-id=1%3A2&scaling=scale-down&page-id=0%3A1",
+            "linkDOC":"https://www.yumpu.com/s/LeARWq4k3FCaI2J7",
             "importance":0.5,
-            "radius":5
-        },
-        {
-            "title":"Meditative tool",
-            "date":"October 2019 - February 2020",
-            "description":"Using JavaScript, HTML and CSS to develop multiple short interactive animated app pages and minigames that can be used for meditation and unwinding mental fatigue.",
-            "roles":"Junior Javascript Developer",
-            "client":"CodeWest",
-            "images":"",
-            "link":"",
-            "importance":0.5,
-            "radius":5.7
-        },
-        {
-            "title":"The Burning Reef",
-            "date":"September 2020 - June 2021",
-            "description":"My final project dissertation for (Bsc) Digital Media at UWE. An interactive narative driven audio-visual experience for the web, generated using Three.JS to procedurally generate in WebGL the dynamic environment. The project is an exploration into the effects of a dynamic ambience meant to demonstrate the effects of ocean degradation and elicit and emotional response from users while they explore and collect artefacts that reveal information about the causes of the degrading oceans. The aim of the project is to discover if by eliciting an emotional response, users are more willing to change their lifestyle or opinion of ocean degradation. Effectiveness of the project is measured by user research findings, which proved it to be effective at elliciting an emotional response.",
-            "roles":"Javascript Developer, 3D Artist and User Experience Designer",
-            "client":"Self Led",
-            "images":"",
-            "link":"https://youtu.be/JIOuXj2So3w",
-            "link2":"https://burningreef.netlify.app/",
-            "link3":"https://drive.google.com/file/d/1m-I61_6AdRpabKG07wqvPNwEGbC8yUC_/view?usp=sharing",
-            "link4":"https://github.com/alexrehopkins/burning_reef",
-            "importance":0.6,
-            "radius":4.3
+            "topic":"des"
         },
         {
             "title":"DIVE",
@@ -123,11 +113,11 @@
             "description":"A 2D Javascript game built using the P5.JS library, using procedurally generated random tube that you travel down to collect orbs to transport to new levels.",
             "roles":"Javascript Developer, Music Composer",
             "client":"Self Led",
-            "images":"",
-            "link":"https://divegame.netlify.app/",
-            "link2":"https://github.com/alexrehopkins/DIVE",
+            "images":"dive.gif",
+            "linkURL":"https://divegame.netlify.app/",
+            "linkGIT":"https://github.com/alexrehopkins/DIVE",
             "importance":0.4,
-            "radius":4.7
+            "topic":"dev"
         },
         {
             "title":"Star Skimmer",
@@ -135,10 +125,11 @@
             "description":"A short endless space exploration game developed in Javascript using the P5.JS library with custom sounds and original sound track.",
             "roles":"Javascript Developer, Sound Design",
             "client":"Self Led",
-            "images":"",
-            "link":"https://starskimmer.netlify.app/",
+            "images":"starskimmer.gif",
+            "linkGIT":"https://github.com/alexrehopkins/StarSkimmer",
+            "linkURL":"https://starskimmer.netlify.app/",
             "importance":0.2,
-            "radius":5
+            "topic":"dev"
         },
         {
             "title":"Rain",
@@ -146,11 +137,11 @@
             "description":"A short generative art animation, created using Javascript and the P5.JS library.",
             "roles":"Javascript Developer",
             "client":"Self Led",
-            "images":"",
-            "link":"https://rainvisualiser.netlify.app/",
-            "link2":"https://github.com/alexrehopkins/Rain",
+            "images":"rain.gif",
+            "linkURL":"https://rainvisualiser.netlify.app/",
+            "linkGIT":"https://github.com/alexrehopkins/Rain",
             "importance":0.07,
-            "radius":5.7
+            "topic":"dev"
         },
         {
             "title":"Carbon Visualisation",
@@ -158,34 +149,46 @@
             "description":"A data visualisation project created to visualise the varying carbon dioxide levels in the UK by retrieving values from a realtime API. The project also allows users to log their routine in travelling by road in order to collate all the results from all users throughout the day and see any potential correlation.",
             "roles":"Backend (API/NodeJS/SocketIO), Javascript Developer",
             "client":"Self Led",
-            "images":"",
-            "link":"https://alexrehopkins-carbon.glitch.me/",
-            "link2":"https://github.com/alexrehopkins/CarbonIntensity",
+            "images":"carbonvisualisation.png",
+            "linkURL":"https://alexrehopkins-carbon.glitch.me/",
+            "linkGIT":"https://github.com/alexrehopkins/CarbonIntensity",
             "importance":0.21,
-            "radius":3.7
+            "topic":"dev"
         },
         {
             "title":"Echo Architect",
             "date":"January 2020 - May 2020",
-            "description":"An interactive game encouraging playful connections through the use of a puzzle-like interface where users must guess the code by identifying individual elements of a soundtrack. Made as an internet of Things project combining Arduino hardware for a physical interface and Javascript and ReactJS for the software interface.",
+            "description":"An interactive game encouraging playful connections through the use of a puzzle-like interface where users must guess the code by identifying individual elements of a soundtrack. Made as an internet of Things project combining Arduino hardware for a physical interface and Javascript and ReactJS for the software interface. The project was aided by research in which we conducted user interviews on the types of interactions and genres of music users would find more enjoyable.",
             "roles":"Sound Design, Visual Design, Javascript Developer",
             "client":"Self Led",
-            "images":"",
-            "link":"https://www.youtube.com/watch?v=Qw-OJ1nJhOA",
-            "link2":"https://youtu.be/oxfEUbGulws",
+            "images":"echoarchitect.png",
+            "linkYT":"https://www.youtube.com/watch?v=Qw-OJ1nJhOA",
+            "linkYT2":"https://youtu.be/oxfEUbGulws",
+            "linkGIT":"https://github.com/spikethea/echo_architect",
             "importance":0.23,
-            "radius":4.1
+            "topic":"dev"
         },
         {
             "title":"Backscatter Remover",
             "date":"May 2019 - September 2019",
-            "description":"Using Photoshop to create a dataset for a machine learning algorithm. Also, creation of accompanying documents and website that would allow submission of new images to the machine learning software.",
+            "description":"Using Photoshop to create a dataset for a machine learning algorithm. Also, creation of accompanying documents and website that would allow for the submission of multiple new images to the machine learning software, website deployment currently uses seperate untrained machine learning algorithm as proof of concept.",
             "roles":"Web Developer Intern",
             "client":"Simon Emberton",
-            "images":"",
-            "link":"https://github.com/alexrehopkins/Backscatter",
+            "images":"backscatter.png",
+            "linkGIT":"https://github.com/alexrehopkins/Backscatter",
             "importance":0.15,
-            "radius":2.3
+            "topic":"dev"
+        },
+        {
+            "title":"Meditative tool",
+            "date":"October 2019 - February 2020",
+            "description":"Using JavaScript, HTML and CSS to develop multiple short interactive animated app pages and minigames that can be used for meditation and unwinding mental fatigue.",
+            "roles":"Junior Javascript Developer",
+            "client":"CodeWest",
+            "images":"meditativetool.gif",
+            "linkURL":"https://www.codewest.uk/",
+            "importance":0.5,
+            "topic":"dev"
         },
         {
             "title":"Swerve",
@@ -193,11 +196,11 @@
             "description":"A data visualisation group collaboration project led by me where I pitched an idea to a panel of creatives to build a team to create the project, aiming to collect data from users of their beliefs regarding the trolley problem scenarios and collate the results as a whole.",
             "roles":"Backend (NodeJS/SocketIO), Javascript Developer, Project Management",
             "client":"Self Led",
-            "images":"",
-            "link":"https://drive.google.com/file/d/1DppTrzG24eR0qnjlYhabPoC4vN08WBVo/view?usp=sharing",
-            "link2":"https://swerve-cwd.glitch.me/",
+            "images":"swerve.png",
+            "linkDOC":"https://drive.google.com/file/d/1DppTrzG24eR0qnjlYhabPoC4vN08WBVo/view?usp=sharing",
+            "linkURL":"https://swerve-cwd.glitch.me/",
             "importance":0.1,
-            "radius":1.9
+            "topic":"dev"
         },
         {
             "title":"Wordpress Blog",
@@ -205,10 +208,10 @@
             "description":"A look into my experience as a first year student at UWE studying Digital Media (Bsc). I document my experience as an ongoing blog and build a wordpress site to host it.",
             "roles":"Web Design (Wordpress), Writer",
             "client":"Self Led",
-            "images":"",
-            "link":"https://alexdigitalmedia1.wordpress.com/",
+            "images":"wordpressblog.png",
+            "linkURL":"https://alexdigitalmedia1.wordpress.com/",
             "importance":0.08,
-            "radius":1.5
+            "topic":"dev"
         }
     ]    
 }
