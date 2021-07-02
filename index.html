@@ -36,7 +36,7 @@
 			<hr style="margin:5%">
 			<p></p>
 			<div id="pagegap" style="height: 20vh;">
-				<a id="scroller" href="#name">⟰ Scroll ⟰</a>
+				<a id="scroller" href="#div1">⟰ Scroll ⟰</a>
 			</div>
 			
 		</div>
@@ -255,18 +255,19 @@
 				
 				//image end
 				createEle(data.experience[which].title,"h1","", holder);
-				createEle(data.experience[which].date,"h3","" , holder);
+				createEle(data.experience[which].date,"p","" , holder);
 				createEle(data.experience[which].client,"h2","Client: ", holder);
 				createEle(data.experience[which].description,"p","" , holder);
 				createEle(data.experience[which].roles,"h2","Roles: ", holder);
 				
-				if (data.experience[which].linkURL) {createEle(data.experience[which].linkURL,"h3","Link: ", holder);}
-				if (data.experience[which].linkDOC) {createEle(data.experience[which].linkDOC,"h3","Documentation: ", holder);}
-				if (data.experience[which].linkYT) {createEle(data.experience[which].linkYT,"h3","Youtube: ", holder);}
-				if (data.experience[which].linkYT2) {createEle(data.experience[which].linkYT2,"h3","Youtube: ", holder);}
-				if (data.experience[which].linkGIT) {createEle(data.experience[which].linkGIT,"h3","GitHub: ", holder);}
+				if (data.experience[which].linkURL) {createEle(data.experience[which].linkURL,"a","@ Live URL", holder);}
+				if (data.experience[which].linkDOC) {createEle(data.experience[which].linkDOC,"a","🕮 Documentation", holder);}
+				if (data.experience[which].linkYT) {createEle(data.experience[which].linkYT,"a","▶ Video", holder);}
+				if (data.experience[which].linkYT2) {createEle(data.experience[which].linkYT2,"a","▶ Video", holder);}
+				if (data.experience[which].linkGIT) {createEle(data.experience[which].linkGIT,"a","</> GitHub", holder);}
 				
-
+				let title1 = document.createElement("p");
+				holder.appendChild(title1);
 			}
 
 			function zoom(valOn,valOff) {
@@ -320,14 +321,23 @@
 
 			function createEle(target, htmlSetting, definer, type) {
 				let title = document.createElement(htmlSetting);
-				let node = document.createTextNode(target);
+				
+				
 				if (definer) {
+					
 					title.appendChild(document.createTextNode(definer));
 				}
 				if (htmlSetting == "Youtube: ") {
 
 				}
-				title.appendChild(node);
+				if (htmlSetting == "a") {
+					title.id = "linker";
+					title.href = target;
+				} else {
+
+					let node = document.createTextNode(target);
+					title.appendChild(node);
+				}
 				type.appendChild(title);
 			}
 		</script>
