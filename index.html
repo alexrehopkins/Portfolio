@@ -55,7 +55,7 @@
 			let originalText, originalTitle, originalDesc, originalImg, originalRoles, originalClient;
 
 			let currentSelected = -1;
-
+			let filter = 0; //0=not filtered, 1 personal, 2 client, 3 design, 4 development
 			let mode = 1;
 
 			let data;
@@ -271,11 +271,17 @@
 			}
 
 			function zoom(valOn,valOff) {
-				for (let i=0; i < document.getElementsByClassName(valOn).length; i++) {
-					document.getElementsByClassName(valOn)[i].style.display = "block";
+				document.getElementById("per").style.background = "black";
+				document.getElementById("cli").style.background = "black";
+				document.getElementById("des").style.background = "black";
+				document.getElementById("dev").style.background = "black";
+				if (valOn == "all") {
+					filterCSS("clie","block");
+					filterCSS("pers","block");
 				}
-				for (let i=0; i < document.getElementsByClassName(valOff).length; i++) {
-					document.getElementsByClassName(valOff)[i].style.display = "none";
+				else {
+					filterCSS(valOn,"block");
+					filterCSS(valOff,"none");
 				}
 				if (anim > 9) {
 					anim = -10;
@@ -283,35 +289,53 @@
 			}
 
 			function perSort() {
-				zoom("pers","clie");
-				document.getElementById("per").style.background = "#9ec200";
-				document.getElementById("cli").style.background = "black";
-				document.getElementById("des").style.background = "black";
-				document.getElementById("dev").style.background = "black";
+				if (filter == 1) {
+					zoom("all","none");
+					filter = 0;
+				} else {
+					zoom("pers","clie");
+					document.getElementById("per").style.background = "#9ec200";
+					filter = 1;
+				}
 			}
 
 			function cliSort() {
-				zoom("clie","pers");
-				document.getElementById("per").style.background = "black";
-				document.getElementById("cli").style.background = "#ba8200";
-				document.getElementById("des").style.background = "black";
-				document.getElementById("dev").style.background = "black";
+				if (filter == 2) {
+					zoom("all","none");
+					filter = 0;
+				} else {
+					zoom("clie","pers");
+					document.getElementById("cli").style.background = "#ba8200";
+					filter = 2;
+				}
 			}
 
 			function desSort() {
-				zoom("des","dev");
-				document.getElementById("per").style.background = "black";
-				document.getElementById("cli").style.background = "black";
-				document.getElementById("des").style.background = "#0074c2";
-				document.getElementById("dev").style.background = "black";
+				if (filter == 3) {
+					zoom("all","none");
+					filter = 0;
+				} else {
+					zoom("des","dev");
+					document.getElementById("des").style.background = "#0074c2";
+					filter = 3;
+				}
 			}
 
 			function devSort() {
-				zoom("dev","des");
-				document.getElementById("per").style.background = "black";
-				document.getElementById("cli").style.background = "black";
-				document.getElementById("des").style.background = "black";
-				document.getElementById("dev").style.background = "#00ba63";
+				if (filter == 4) {
+					zoom("all","none");
+					filter = 0;
+				} else {
+					zoom("dev","des");
+					document.getElementById("dev").style.background = "#00ba63";
+					filter = 4;
+				}
+			}
+
+			function filterCSS(val,setting) {
+				for (let i=0; i < document.getElementsByClassName(val).length; i++) {
+					document.getElementsByClassName(val)[i].style.display = setting;
+				}
 			}
 
 			document.getElementById("per").addEventListener("click", perSort, false);
