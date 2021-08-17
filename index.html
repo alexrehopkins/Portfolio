@@ -90,12 +90,18 @@
 				})
 				.then(database => {
 					data = database;
-					console.log(data);
+					//console.log(data);
 					animate();
 					for (let i = 0; i < data.experience.length; i++){
 						formatter(i, "experience");
 					}
-					
+					const queryString = window.location.search;
+					if (queryString == "?show:design") {
+						desSort();
+					}
+					if (queryString == "?show:development") {
+						devSort();
+					}
 				});
 
 				//const container = document.getElementById( 'container' );
