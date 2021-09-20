@@ -15,6 +15,18 @@
             "topic":"dev"
         },
         {
+            "title":"The Big Sleep Co",
+            "date":"July 2020 - September 2021",
+            "description":"Researching onboarding of course-based online service as teams sole UX specialist. Profiling new user groups and creating a marketing business plan alongside a prototyped mobile solution.",
+            "roles":"User Experience Designer, UX/UI Design, Digital Consultant",
+            "client":"The Big Sleep Co",
+            "images":"bigsleep.png",
+            "linkURL":"https://www.figma.com/proto/ZUMpzzfRtvhICxSfKU6LeA/TheBigSleepCo?node-id=20%3A96&scaling=scale-down&page-id=0%3A1&starting-point-node-id=20%3A96",
+            "linkDOC":"https://drive.google.com/file/d/12FMnseBHJIwJaLKWxhKGr_fp9afN_-uw/view?usp=sharing",
+            "importance":0.6,
+            "topic":"des"
+        },
+        {
             "title":"Critical Eye",
             "date":"October 2020 - Current",
             "description":"Creating media, imagery, logos, iconography and working on web prototypes for the Critical Eye image archival website project. Critical Eye: Visual Archives for Education will provide a platform for schools and museums to use for education through the use of guides and a visual archive of user responses. My responsibilities also included providing user research, design research and branding feedback for use by the IC: Visual Labs Team.",
