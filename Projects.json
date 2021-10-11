@@ -3,7 +3,7 @@
         {
             "title":"The Burning Reef",
             "date":"September 2020 - June 2021",
-            "description":"My final project dissertation for (Bsc) Digital Media at UWE. An interactive narative driven audio-visual experience for the web, generated using Three.JS to procedurally generate in WebGL the dynamic environment. The project is an exploration into the effects of a dynamic ambience meant to demonstrate the effects of ocean degradation and elicit and emotional response from users while they explore and collect artefacts that reveal information about the causes of the degrading oceans. The aim of the project is to discover if by eliciting an emotional response, users are more willing to change their lifestyle or opinion of ocean degradation. Effectiveness of the project is measured by user research findings, which proved it to be effective at elliciting an emotional response.",
+            "description":"My final project dissertation for (Bsc) Digital Media at UWE. An interactive narative driven audio-visual experience for the web, generated using Three.JS to procedurally generate in WebGL the dynamic environment. The project is an exploration into the effects of a dynamic ambience meant to demonstrate the effects of ocean degradation and elicit and emotional response while they explore and collect artefacts related to the causes of the degradation. Effectiveness of the project was confirmed by qualitative and quantitative user research.",
             "roles":"Javascript Developer, 3D Artist, User Experience Designer",
             "client":"Self Led",
             "images":"burningreef.gif",
@@ -80,9 +80,10 @@
             "description":"A short experimental film production shot in my house with a Note 10 Lite phone camera. Post production took place using After Effects for the VFX and Premiere Pro for the general cutting, audio was fine tuned in Audition. If you'd like to see some more of my photography or traditional art check out my instagram @alexrehopkins!",
             "roles":"Content Creation, Film Editor, VFX Artist, Creative Director",
             "client":"Self Led",
-            "images":"masque.gif",
+            "images":"masque.png",
             "linkYT":"https://youtu.be/lNp6I00SDWk",
             "linkURL":"https://www.instagram.com/alexrehopkins/",
+            "linkIMG":"https://drive.google.com/file/d/1YQb6yEV3V4eUqv3WsYGwAmfWhze2fk1Y/view?usp=sharing",
             "importance":0.2,
             "topic":"des"
         },
@@ -182,13 +183,14 @@
             "topic":"dev"
         },
         {
-            "title":"Wordpress Blog",
-            "date":"January 2019 - June 2019",
-            "description":"A look into my experience as a first year student at UWE studying Digital Media (Bsc). I document my experience as an ongoing blog and build a wordpress site to host it.",
-            "roles":"Web Design (Wordpress), Writer",
-            "client":"Self Led",
-            "images":"wordpressblog.png",
-            "linkURL":"https://alexdigitalmedia1.wordpress.com/",
+            "title":"Panacea",
+            "date":"July 2021 - September 2021",
+            "description":"Overseeing the artistic direction of the Panacea event as part of the Prevail 2021 festival at Bristol Beacon. Creating the logo and building the promotional website for the live event.",
+            "roles":"Visual Director, Web Designer, Graphics Designer, Unity",
+            "client":"Bristol Beacon",
+            "images":"panacea.png",
+            "linkURL":"https://panacea.city/",
+            "linkYT":"https://youtu.be/ASN2x1MXe8U",
             "importance":0.08,
             "topic":"dev"
         }
