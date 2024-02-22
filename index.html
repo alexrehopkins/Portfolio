@@ -1,373 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<title>Alex Hopkins</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link type="text/css" rel="stylesheet" href="main.css">
-		<link rel="icon" href="/favicon.ico?v=2" type="image/x-icon" />
-		
-	</head>
-	<body>
-		<canvas id="viewport"></canvas>
-		<div id="div1" class="page-wrapper" >
-			<div id="pagegap"></div>
-			<div style="margin-left: 5%;">
-			<h1 id="name" style="left: 30px">ALEX HOPKINS</h1>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alex Hopkins</title>
+    <meta name="description" content="Alex Hopkins UX Portfolio">
+    <link href="styles.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap" rel="stylesheet" type='text/css'>
+  </head>
+  <body>
+    <div class="backg"></div>
 
+    <div class="cont">
+        <div class="row">
+            <h1 style="animation: 1s ease 0s 1 slidein;">Hey, yo<span class="coolo">u</span></h1>
+            <h1 style="animation: 2.5s ease 0s 1 slidein;">I'm Ale<span class="coolo">x</span> Hopkins.</h1>
+            <h1 style="animation: 4s ease 0s 1 slidein;">And I t<span class="coolo">u</span>rn complex problems into</h1>
+            <h1 style="animation: 6s ease 0s 1 slidein;">satisfy<span class="coolo">i</span>ng <span class="coolo">design</span> solutions.</span></h1>
+        </div>
+        <div style="padding-top: 10%;"></div>
+        <div class="row">
+			<h3>Get in touch <a href="https://www.linkedin.com/in/ahop/">here.</a></h3>
+        	<h2>Currently working at Dyson as a Connected Experience Designer,</h2>
+        	<h4>Backed by <a href="">3 years of experience delivering UX/UI projects</a> and a passion for <a href="">motion</a> and <a href="">code</a>. </h4>
+        </div>
+		<div style="padding-top: 10%;"></div>
+		<div id="cardcontainer">
 
-			<h2>UX/UI Designer with a passion for creative coding, based in Bristol</h2>
-			<h2>Want to collaborate? <a href="https://www.linkedin.com/in/ahop/">Find me here</a> Or contact me at <a href="mailto:alexrehopkins@gmail.com">alexrehopkins@gmail.com</a></h2>
-			<a id="scroller" href="#works">⟱ Scroll ⟱</a>
-			<div id="pagegap"></div>
-			<div id="pagegap"></div>
-			
-			<h2 id="works">SHOW ONLY:</h2>
-			
-			<button id="per">PERSONAL PROJECTS</button>
-			<button id="cli">CLIENT WORK</button>
-			<button id="des">DESIGN</button>
-			<button id="dev">DEVELOPMENT</button>
-			</div>
-			<p></p>
-			<div id="experience">
-
-			</div>
-			<hr style="margin:5%">
-			<p></p>
-			<div id="pagegap" style="height: 20vh;">
-				<a id="scroller" href="#div1">⟰ Scroll ⟰</a>
-			</div>
-			
 		</div>
-
-
-		<script type="module">
-
-			import * as THREE from '/three.module.js';
-			import { EffectComposer } from '/EffectComposer.js';
-			import { RenderPass } from '/RenderPass.js';
-			import { UnrealBloomPass } from '/UnrealBloomPass.js';
-
-			let camera, stats;
-			let composer, renderer, clock;
-			let mouse, raycaster;
-			let originalText, originalTitle, originalDesc, originalImg, originalRoles, originalClient;
-
-			let currentSelected = -1;
-			let filter = 0; //0=not filtered, 1 personal, 2 client, 3 design, 4 development
-			let mode = 1;
-
-			let data;
-
-			let anim = 100;
-			let timer;
-
-			let particleGeo, vertices, sprite, particles, particleMat;
-			let scene;
-
-			//new objects
-			let grid;
-			let tracker = 0;
-
-			let torusArray = [];
-
-
-			const params = {
-				exposure: 1,
-				bloomStrength: 1,
-				bloomThreshold: 0.1,
-				bloomRadius: 0
-			};
-
-			init();
-
+        </div>
+		
+		
+	
+    <script>
+		let data;
+		init();
+      
 			function init() {
-				//import project data
+				//projects json
 				fetch("/Projects.json")
 				.then(response => {
 				return response.json();
 				})
 				.then(database => {
 					data = database;
-					//console.log(data);
-					animate();
-					for (let i = 0; i < data.experience.length; i++){
-						formatter(i, "experience");
-					}
-					const queryString = window.location.search;
-					if (queryString == "?show:design") {
-						desSort();
-					}
-					if (queryString == "?show:development") {
-						devSort();
-					}
-				});
+          for (let i = 0; i < data.experience.length; i++) {
+					  createCard(i);
+				  }
+			});
+     	}
 
-				clock = new THREE.Clock();
-
-				renderer = new THREE.WebGLRenderer( { antialias: true, canvas: document.getElementById("viewport") } );
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				renderer.toneMapping = THREE.ReinhardToneMapping;
-				
-				
-				scene = new THREE.Scene();
-
-				//particles
-
-				particleGeo = new THREE.BufferGeometry();
-				vertices = [];
-				sprite = new THREE.TextureLoader().load('pics/sprite.png');
-
-
-				for ( let i = 0; i < 2000; i ++ ) {
-					const x = 100 * (Math.random() - 0.5);
-					const y = 100 * (Math.random() - 0.5);
-					const z = 100 *(Math.random() - 0.5);
-
-					vertices.push( x, y, z );
-				}
-				particleGeo.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
-				particleMat = new THREE.PointsMaterial( { size: 0.5, sizeAttenuation: true, map: sprite, alphaTest: 0.5, transparent: true } );
-				particleMat.color.setHSL( 1.0, 0.3, 0.7 );
-				particles = new THREE.Points( particleGeo, particleMat );
-				particles.position.set(0,15,0);
-				scene.add(particles);
-				scene.background = new THREE.Color( 0x04060b );
-				
-				
-				
-				//camera
-
-				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 5, 150 );
-				camera.position.set( 0, 0, 20 );
-				camera.lookAt(0, 0, 0);
-				updateCamera();
-				scene.add( camera );
-				scene.fog = new THREE.Fog(0x04060b, 20, 125);
-
-				scene.add( new THREE.AmbientLight( 0xffffff , 1 ) );
-				const pointLight = new THREE.PointLight( 0xffffff, 1 );
-				camera.add( pointLight );
-				const renderScene = new RenderPass( scene, camera );
-				const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
-				bloomPass.threshold = params.bloomThreshold;
-				bloomPass.strength = params.bloomStrength;
-				bloomPass.radius = params.bloomRadius;
-				composer = new EffectComposer( renderer );
-				composer.addPass( renderScene );
-				composer.addPass( bloomPass );
-				
-				for (let i = 0; i < 100; i++) {
-					torusMaker(Math.random()*110-55,0.01+(Math.random()/10),1+Math.random()*10, i)
-				}
-
-				//sun
-
-
-				function updateCamera(ev) {
-					let div1 = document.getElementById("div1");
-					//camera.position.y = 0 - window.scrollY / 100.0;
-					camera.position.y = 0 + window.scrollY / 200.0;
-					camera.lookAt(-window.scrollY/500,0,0);
-
-				}
-
-				window.addEventListener("scroll", updateCamera);
-				window.addEventListener( 'resize', onWindowResize );
+	function createElementer(docElement,location,classNam,obj,icon) {
+		if (location) {
+			const thing = document.createElement(docElement);
+        	thing.className = classNam;
+			if (icon == "noMaterialIcon") {
+				thing.appendChild(document.createTextNode(location));
+				obj.appendChild(thing);
 			}
-
-
-			function torusMaker(position, size, radius, which) {
-				let material = new THREE.MeshBasicMaterial( { color: "hsl("+size*2000+", 100%, 50%)" } );
-				let geometry = new THREE.TorusGeometry( radius, size, 16, 100, Math.random()*7 );
-				let torus = new THREE.Mesh( geometry, material );
-				torus.rotateZ(6*Math.random());
-				torus.position.set(0,0,position);
-				torus.speed = radius;
-				torus.origpos = position;
-				torusArray[which] = (torus);
-				scene.add( torusArray[which] );
+			else {
+				const iconObj = document.createElement("span");
+				iconObj.appendChild(document.createTextNode(icon));
+				iconObj.className = "material-symbols-outlined";
+				thing.appendChild(iconObj);
+				thing.appendChild(document.createTextNode(classNam));
+				const linker = document.createElement("a");
+				linker.href = location;
+				linker.appendChild(thing);
+				obj.appendChild(linker);
 			}
+		}
+	}
 
+    function createCard(num) {
+        // create a new div element
+		const newSpan = document.createElement("span");
+        const newDiv = document.createElement("div");
+        
+		
+		const newImg = document.createElement("img");
+        // and give it some content
 
-			function onWindowResize() {
-				const width = window.innerWidth;
-				const height = window.innerHeight;
-				camera.aspect = width / height;
-				camera.updateProjectionMatrix();
-				renderer.setSize( width, height );
-				composer.setSize( width, height );
-			}
+		newImg.src = "pics/"+data.experience[num].images;
+		newDiv.appendChild(newImg);
 
-			function animate() {
-				const delta = clock.getDelta();
-				tracker += 2;
-				if (tracker > 100) {
-					tracker = 0;
-				}
-				if (anim <= 10) {
-					for (let i = 0; i < torusArray.length; i++) {
-						if (anim == 0) {
-							torusArray[i].origpos = Math.random()*110-55;
-						}
-						torusArray[i].position.set(0,0,(Math.abs(anim*anim))*torusArray[i].origpos/100);
-						torusArray[i].rotateZ((anim-10)*delta/torusArray[i].speed);
-						//torusArray[i].rotateX(Math.PI/10); //very cool scatter effect???
-						camera.zoom = 1-(10-Math.abs(anim))/20;
-						camera.updateProjectionMatrix();
-					}
-					anim += 0.25;
-				}
-				particles.rotateX(-delta/5);
-				for (let i = 0; i < torusArray.length; i++) {
-					torusArray[i].rotateZ(delta/torusArray[i].speed);
-				}
-				requestAnimationFrame( animate );
-				composer.render();
-			}
+		createElementer("h2",data.experience[num].title,"title",newDiv,"noMaterialIcon");
+		createElementer("p",data.experience[num].description,"descr",newDiv,"noMaterialIcon");
+		createElementer("h3",data.experience[num].roles,"roles",newDiv,"noMaterialIcon");
+		createElementer("h4",data.experience[num].linkURL,"View",newDiv,"preview");
+		createElementer("h4",data.experience[num].linkGIT,"Github",newDiv,"code_blocks");
+		createElementer("h4",data.experience[num].linkYT,"Youtube",newDiv,"smart_display");
+		createElementer("h4",data.experience[num].linkDOC,"Documentation",newDiv,"description");
+		createElementer("h4",data.experience[num].linkIMG,"Assets",newDiv,"photo_library");
 
-			function formatter(which) {
-				
-				
+        newDiv.id = num;
+		newDiv.className = "card";
+		
+		
+        //newSpan.appendChild(newDiv);
+		newSpan.id = num+"span";
 
-				//div
-				let holder = document.createElement("div");
-				//holder.id = "row";
-				let definer = "";
-				if (data.experience[which].client == "Self Led") {
-					definer = "pers ";
-				} else {
-					definer = "clie ";
-				}
-				holder.id = "row";
-				holder.className = definer+data.experience[which].topic;
-				document.getElementById("experience").appendChild(holder);
-				
-				//break
-				
-				let title = document.createElement("hr");
-				holder.appendChild(title);
-				//image
-				if (data.experience[which].images) {
-					let image = document.createElement('img')
-					image.src  = "pics/"+data.experience[which].images;
-					holder.appendChild(image)
-				}
-				
-				
-				//image end
-				createEle(data.experience[which].title,"h1","", holder);
-				createEle(data.experience[which].date,"p","" , holder);
-				createEle(data.experience[which].client,"h2","Client: ", holder);
-				createEle(data.experience[which].description,"p","" , holder);
-				createEle(data.experience[which].roles,"h2","Roles: ", holder);
-				
-				if (data.experience[which].linkURL) {createEle(data.experience[which].linkURL,"a","@Live URL ", holder);}
-				if (data.experience[which].linkDOC) {createEle(data.experience[which].linkDOC,"a","🕮Documentation ", holder);}
-				if (data.experience[which].linkYT) {createEle(data.experience[which].linkYT,"a","▶Video ", holder);}
-				if (data.experience[which].linkYT2) {createEle(data.experience[which].linkYT2,"a","▶Video ", holder);}
-				if (data.experience[which].linkGIT) {createEle(data.experience[which].linkGIT,"a","</>GitHub ", holder);}
-				if (data.experience[which].linkIMG) {createEle(data.experience[which].linkIMG,"a","🖼Image ", holder);}
-				let title1 = document.createElement("p");
-				holder.appendChild(title1);
-			}
-
-			function zoom(valOn,valOff) {
-				document.getElementById("per").style.background = "black";
-				document.getElementById("cli").style.background = "black";
-				document.getElementById("des").style.background = "black";
-				document.getElementById("dev").style.background = "black";
-				if (valOn == "all") {
-					filterCSS("clie","block");
-					filterCSS("pers","block");
-				}
-				else {
-					filterCSS(valOn,"block");
-					filterCSS(valOff,"none");
-				}
-				if (anim > 9) {
-					anim = -10;
-				}
-			}
-
-			function perSort() {
-				if (filter == 1) {
-					zoom("all","none");
-					filter = 0;
-				} else {
-					zoom("pers","clie");
-					document.getElementById("per").style.background = "#9ec200";
-					filter = 1;
-				}
-			}
-
-			function cliSort() {
-				if (filter == 2) {
-					zoom("all","none");
-					filter = 0;
-				} else {
-					zoom("clie","pers");
-					document.getElementById("cli").style.background = "#ba8200";
-					filter = 2;
-				}
-			}
-
-			function desSort() {
-				if (filter == 3) {
-					zoom("all","none");
-					filter = 0;
-				} else {
-					zoom("des","dev");
-					document.getElementById("des").style.background = "#0074c2";
-					filter = 3;
-				}
-			}
-
-			function devSort() {
-				if (filter == 4) {
-					zoom("all","none");
-					filter = 0;
-				} else {
-					zoom("dev","des");
-					document.getElementById("dev").style.background = "#00ba63";
-					filter = 4;
-				}
-			}
-
-			function filterCSS(val,setting) {
-				for (let i=0; i < document.getElementsByClassName(val).length; i++) {
-					document.getElementsByClassName(val)[i].style.display = setting;
-				}
-			}
-
-			document.getElementById("per").addEventListener("click", perSort, false);
-			document.getElementById("cli").addEventListener("click", cliSort, false);
-			document.getElementById("des").addEventListener("click", desSort, false);
-			document.getElementById("dev").addEventListener("click", devSort, false);
-
-			function createEle(target, htmlSetting, definer, type) {
-				let title = document.createElement(htmlSetting);
-				
-				
-				if (definer) {
-					
-					title.appendChild(document.createTextNode(definer));
-				}
-				if (htmlSetting == "Youtube: ") {
-
-				}
-				if (htmlSetting == "a") {
-					title.id = "linker";
-					title.href = target;
-				} else {
-
-					let node = document.createTextNode(target);
-					title.appendChild(node);
-				}
-				type.appendChild(title);
-			}
-		</script>
-	</body>
+        // add the newly created element and its content into the DOM
+        const currentDiv = document.getElementById("div1");
+        document.getElementById("cardcontainer").insertBefore(newDiv, currentDiv);
+      }
+    </script>
+ </body>
 </html>

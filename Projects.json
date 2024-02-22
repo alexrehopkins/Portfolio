@@ -1,6 +1,18 @@
 {
     "experience": [
         {
+            "title":"The Big Sleep Co",
+            "date":"July 2020 - September 2021",
+            "description":"Researching onboarding of course-based online service as the teams sole UX specialist. Profiling new user groups and creating a marketing business plan alongside a prototyped mobile solution.",
+            "roles":"User Experience Designer, UX/UI Design, Digital Consultant",
+            "client":"The Big Sleep Co",
+            "images":"bigsleep.png",
+            "linkURL":"https://www.figma.com/proto/ZUMpzzfRtvhICxSfKU6LeA/TheBigSleepCo?node-id=20%3A96&scaling=scale-down&page-id=0%3A1&starting-point-node-id=20%3A96",
+            "linkDOC":"https://drive.google.com/file/d/12FMnseBHJIwJaLKWxhKGr_fp9afN_-uw/view?usp=sharing",
+            "importance":0.6,
+            "topic":"des"
+        },
+        {
             "title":"The Burning Reef",
             "date":"September 2020 - June 2021",
             "description":"My final project dissertation for (Bsc) Digital Media at UWE. An interactive narative driven audio-visual experience for the web, generated using Three.JS to procedurally generate in WebGL the dynamic environment. The project is an exploration into the effects of a dynamic ambience meant to demonstrate the effects of ocean degradation and elicit and emotional response while they explore and collect artefacts related to the causes of the degradation. Effectiveness of the project was confirmed by qualitative and quantitative user research.",
@@ -15,16 +27,16 @@
             "topic":"dev"
         },
         {
-            "title":"The Big Sleep Co",
-            "date":"July 2020 - September 2021",
-            "description":"Researching onboarding of course-based online service as teams sole UX specialist. Profiling new user groups and creating a marketing business plan alongside a prototyped mobile solution.",
-            "roles":"User Experience Designer, UX/UI Design, Digital Consultant",
-            "client":"The Big Sleep Co",
-            "images":"bigsleep.png",
-            "linkURL":"https://www.figma.com/proto/ZUMpzzfRtvhICxSfKU6LeA/TheBigSleepCo?node-id=20%3A96&scaling=scale-down&page-id=0%3A1&starting-point-node-id=20%3A96",
-            "linkDOC":"https://drive.google.com/file/d/12FMnseBHJIwJaLKWxhKGr_fp9afN_-uw/view?usp=sharing",
-            "importance":0.6,
-            "topic":"des"
+            "title":"Panacea",
+            "date":"July 2021 - September 2021",
+            "description":"Overseeing the artistic direction of the Panacea event as part of the Prevail 2021 festival at Bristol Beacon. Creating the logo and building the promotional website for the live event.",
+            "roles":"Visual Lead, Web Designer, 3D Designer, Graphics Designer, Unity Engineer",
+            "client":"Bristol Beacon",
+            "images":"panacea.png",
+            "linkURL":"https://panacea.city/",
+            "linkYT":"https://youtu.be/ASN2x1MXe8U",
+            "importance":0.08,
+            "topic":"dev"
         },
         {
             "title":"Critical Eye",
@@ -42,8 +54,8 @@
         {
             "title":"SAM-APP for Anxiety",
             "date":"July 2020 - October 2020",
-            "description":"Using After Effects, Illustrator, Premiere Pro and Photoshop to create assets and then animate them into short videos to encourage positive mental health habits for use on the SAM-App, mental health app for mobile.",
-            "roles":"Mobile Motion Content Creator",
+            "description":"Creating short animations in CSS and the Adobe Creative Suite that are then implemented into the SAM-App, ensuring compatibility while following the brand styling guidelines of the app, which is designed to encourage positive mental health habits.",
+            "roles":"2D Motion designer for Mobile",
             "client":"SAM",
             "images":"samapp.gif",
             "linkURL":"https://sam-app.org.uk/",
@@ -59,31 +71,6 @@
             "images":"communicare.png",
             "linkURL":"https://ux-ola.invisionapp.com/prototype/ckq2v3fqm002ick01g9jso9eb/play",
             "linkDOC":"https://drive.google.com/file/d/1TuYVC743-ZdBBp2nOxjE8NnzRFpYGU4m/view?usp=sharing",
-            "importance":0.2,
-            "topic":"des"
-        },
-        {
-            "title":"Flash Flask",
-            "date":"October 2018 - December 2018",
-            "description":"A multimedia project involving designing the branding for an original drinking vessel, which could heat the contents up on the go. The work included working on the branding, creating 3D prototypes to then film as part of a infomercial advert and creating accompanying infographics and media to be displayed in a portfolio created with Illustrator.",
-            "roles":"Graphics Designer, Branding, Film Editor",
-            "client":"Self Led",
-            "images":"flashflask.png",
-            "linkYT":"https://youtu.be/Sqztqz8Mv8w",
-            "linkURL":"https://www.yumpu.com/en/document/view/65696652/flash-flask-portfolio",
-            "importance":0.2,
-            "topic":"des"
-        },
-        {
-            "title":"Masque",
-            "date":"October 2020 - January 2021",
-            "description":"A short experimental film production shot in my house with a Note 10 Lite phone camera. Post production took place using After Effects for the VFX and Premiere Pro for the general cutting, audio was fine tuned in Audition. If you'd like to see some more of my photography or traditional art check out my instagram @alexrehopkins!",
-            "roles":"Content Creation, Film Editor, VFX Artist, Creative Director",
-            "client":"Self Led",
-            "images":"masque.png",
-            "linkYT":"https://youtu.be/lNp6I00SDWk",
-            "linkURL":"https://www.instagram.com/alexrehopkins/",
-            "linkIMG":"https://drive.google.com/file/d/1YQb6yEV3V4eUqv3WsYGwAmfWhze2fk1Y/view?usp=sharing",
             "importance":0.2,
             "topic":"des"
         },
@@ -139,11 +126,10 @@
             "title":"Echo Architect",
             "date":"January 2020 - May 2020",
             "description":"An interactive game encouraging playful connections through the use of a puzzle-like interface where users must guess the code by identifying individual elements of a soundtrack. Made as an internet of Things project combining Arduino hardware for a physical interface and Javascript and ReactJS for the software interface. The project was aided by research in which we conducted user interviews on the types of interactions and genres of music users would find more enjoyable.",
-            "roles":"Javascript Developer, Sound Design, Creative Director",
+            "roles":"Javascript Developer, Sound Design, Creative Lead",
             "client":"Self Led",
             "images":"echoarchitect.png",
-            "linkYT":"https://www.youtube.com/watch?v=Qw-OJ1nJhOA",
-            "linkYT2":"https://youtu.be/oxfEUbGulws",
+            "linkYT":"https://youtu.be/oxfEUbGulws",
             "linkGIT":"https://github.com/spikethea/echo_architect",
             "importance":0.23,
             "topic":"dev"
@@ -152,7 +138,7 @@
             "title":"Backscatter Remover",
             "date":"May 2019 - September 2019",
             "description":"Using Photoshop to create a dataset for a machine learning algorithm. Also, creation of accompanying documents and website that would allow for the submission of multiple new images to the machine learning software, website deployment currently uses seperate untrained machine learning algorithm as proof of concept.",
-            "roles":"Web Developer, Artworker",
+            "roles":"Web Developer, Artworker, Creative",
             "client":"Simon Emberton",
             "images":"backscatter.png",
             "linkGIT":"https://github.com/alexrehopkins/Backscatter",
@@ -160,7 +146,7 @@
             "topic":"dev"
         },
         {
-            "title":"Meditative tool",
+            "title":"Meditative tools",
             "date":"October 2019 - February 2020",
             "description":"Using JavaScript, HTML and CSS to develop multiple short interactive animated app pages and minigames that can be used for meditation and unwinding mental fatigue.",
             "roles":"Javascript Developer, Frontend",
@@ -183,16 +169,16 @@
             "topic":"dev"
         },
         {
-            "title":"Panacea",
-            "date":"July 2021 - September 2021",
-            "description":"Overseeing the artistic direction of the Panacea event as part of the Prevail 2021 festival at Bristol Beacon. Creating the logo and building the promotional website for the live event.",
-            "roles":"Visual Director, Web Designer, Graphics Designer, Unity",
-            "client":"Bristol Beacon",
-            "images":"panacea.png",
-            "linkURL":"https://panacea.city/",
-            "linkYT":"https://youtu.be/ASN2x1MXe8U",
-            "importance":0.08,
-            "topic":"dev"
+            "title":"Masque",
+            "date":"October 2020 - January 2021",
+            "description":"A short experimental film production shot in my house with a Note 10 Lite phone camera. Post production took place using After Effects for the VFX and Premiere Pro for the general cutting, audio was fine tuned in Audition. If you'd like to see some more of my photography or traditional art check out my instagram @alexrehopkins!",
+            "roles":"Content Creation, Film Editor, VFX Artist, Creative Director",
+            "client":"Self Led",
+            "images":"masque.png",
+            "linkYT":"https://youtu.be/lNp6I00SDWk",
+            "linkIMG":"https://drive.google.com/file/d/1YQb6yEV3V4eUqv3WsYGwAmfWhze2fk1Y/view?usp=sharing",
+            "importance":0.2,
+            "topic":"des"
         }
     ]    
 }

@@ -1,0 +1,168 @@
+html, body {
+  background-color: rgb(20, 19, 31) !important;
+  margin: 0;
+}
+
+body {
+  padding-left: 7vw;
+  padding-top: 7vw;
+}
+
+.backg {
+  background: url("pics/me2.jpg");
+  background-color: rgb(20, 19, 31);
+  opacity: 1;
+  background-size: contain;
+  position: absolute;
+  background-blend-mode: screen;
+  top: 100px;
+  right: 0px;
+  width: 30vw;
+  height: 40vw;
+  z-index: 0;
+}
+
+h1,h2,h3,h4 {
+    font-family: 'Roboto Mono', monospace;
+    transition: 1s;
+    color: antiquewhite;
+}
+
+h1 {
+  line-height: 1.1;
+  box-sizing: border-box;
+    margin: 0;
+    font-size: 3.2vw;
+}
+
+a {
+  color: rgb(255, 172, 237);
+  text-decoration: none;
+}
+
+.coolo {
+    color: rgb(255, 136, 229);
+    animation: 7s ease 0s 1 slidedown;
+    animation: 7s ease 0s 1 fade;
+    text-shadow: 1px 1px 10px rgb(255, 91, 219);
+}
+
+
+@keyframes fade {
+
+  0% {
+    color: antiquewhite;
+    text-shadow: 0px 0px 0px rgb(255, 91, 219);
+
+  }
+  80% {
+    color: antiquewhite;
+    text-shadow: 0px 0px 0px rgb(255, 91, 219);
+
+  }
+  100% {
+    color: rgb(255, 136, 229);
+    text-shadow: 1px 1px 10px rgb(255, 91, 219);
+  }
+}
+
+@keyframes slidein {
+
+  0% {
+    transform: translateX(-1000px);
+    opacity: 0%;
+  }
+  30% {
+    transform: translateX(-1000px);
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+    transform: translateX(0px);
+  }
+}
+
+#projectClicked {
+  background-color: rgb(39, 38, 53);;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  display: none;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 30px;
+  color: whitesmoke;
+}
+
+#closer {
+  cursor: pointer;
+}
+
+
+#projectImg {
+  max-width: 90%;
+  object-fit: contain !important;
+}
+
+.card {
+  background-color: rgba(0, 0, 0, 0.501);
+  box-shadow: -1px -1px 10px rgb(255, 255, 255) inset;
+  border-color: aliceblue;
+  border-width: 2px;
+
+  padding: 10px;
+  margin: 20px;
+  border-radius: 20px;
+  height: 375px;
+  right: 4%;
+  z-index: 100;
+  position:relative;
+}
+
+.card img {
+  width: 250px;
+  border-radius: 12px;
+  margin-right: 20px;
+  float: left;
+}
+
+.card h2 {
+  color: antiquewhite;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.card h3 {
+  color: antiquewhite;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.card p {
+  color: antiquewhite;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.card h4 {
+
+  color: rgb(255, 172, 237);
+  font-family: 'Roboto Mono', monospace;
+  margin-top: 4px;
+  margin-bottom: 0px;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
+
+.card h4 span {
+  translate: -5px 5px;
+  color: rgb(255, 172, 237);
+}
+
+.material-symbols-outlined {
+  color: antiquewhite;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
