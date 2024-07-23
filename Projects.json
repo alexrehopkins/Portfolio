@@ -1,6 +1,39 @@
 {
     "experience": [
         {
+            "title":"MyDyson app - Innovation team",
+            "date":"January 2024 - Current",
+            "description":"Discovering new innovative technologies and researching potential business cases and user needs surrounding them. Prototyping and designing conceptual app experiences for future connected products to propose to the wider business and hand off to the delivery team. As part of my role, I've also been heavily involved with the Design Ops group of the team, this includes our tools and processes such as file layout, organisation and asset generations such as Lottie animations.",
+            "roles":"Senior Connected Experience Designer, User research",
+            "client":"Dyson",
+            "images":"bigsleep.png",
+            "linkURL":"https://www.dyson.co.uk/app",
+            "importance":0.7,
+            "topic":"des"
+        },
+        {
+            "title":"MyDyson app - Dyson OnTrac",
+            "date":"April 2022 - January 2024",
+            "description":"Leading the design for the connected experience for Dyson's second pair of headphones. Worked against tight project timelines and proposed a phased app delivery to senior stakeholders in order to meet the product launch. Analysing feedback and usage data from Dyson Zone users to create a more engaging experience. Collaborating closely with design system team to establish key cross category experiences, such as alert formats. As part of the role, I've supported the growth of our design team by helping onboard new starters.",
+            "roles":"Connected Experience Designer, UI Design",
+            "client":"Dyson",
+            "images":"bigsleep.png",
+            "linkURL":"https://www.dyson.co.uk/app",
+            "importance":0.8,
+            "topic":"des"
+        },
+        {
+            "title":"MyDyson app - Dyson Zone",
+            "date":"November 2021 - April 2022",
+            "description":"Delivering the connected experience for the first Dyson headphones. Collaborating with the insights team to iterate designs based on feedback with the target demographic. Key iterations include enhancing onboarding with short animations to aid set-up of the unique purifying headset and visor. Following the launch, more issues were identified around interpretting air quality around the time of the New York wildfires, this led to a design sprint on coming up with and delivering UI amendments to help usability on the page.",
+            "roles":"Junior Connected Experience Designer, Motion Design",
+            "client":"Dyson",
+            "images":"bigsleep.png",
+            "linkURL":"https://www.dyson.co.uk/app",
+            "importance":0.65,
+            "topic":"des"
+        },
+        {
             "title":"The Big Sleep Co",
             "date":"July 2020 - September 2021",
             "description":"Researching onboarding of course-based online service as the teams sole UX specialist. Profiling new user groups and creating a marketing business plan alongside a prototyped mobile solution.",
