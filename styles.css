@@ -8,6 +8,22 @@ body {
   padding-top: 7vw;
 }
 
+.circle {
+  position: fixed;
+  pointer-events: none;
+  width: 100px;
+  height: 100px;
+  top: -50%;
+  left: 50%;
+  margin: -50px 0 0 -50px;
+  background: antiquewhite;
+  z-index: 1;
+  mix-blend-mode: difference;
+  border-radius: 80%;
+  backface-visibility: hidden;
+  contain: layout;
+}
+
 .backg {
   background: url("pics/me2.jpg");
   background-color: rgb(20, 19, 31);
@@ -15,7 +31,7 @@ body {
   background-size: contain;
   position: absolute;
   background-blend-mode: screen;
-  top: 100px;
+  top: 10vw;
   right: 0px;
   width: 30vw;
   height: 40vw;
@@ -110,10 +126,10 @@ a {
   border-color: aliceblue;
   border-width: 2px;
 
-  padding: 10px;
+  padding: 20px;
   margin: 20px;
   border-radius: 20px;
-  height: 375px;
+  min-height: 375px;
   right: 4%;
   z-index: 100;
   position:relative;
@@ -122,8 +138,17 @@ a {
 .card img {
   width: 250px;
   border-radius: 12px;
-  margin-right: 20px;
-  float: left;
+  margin-left: 20px;
+  float: right;
+}
+
+@media screen and (max-width: 600px) {
+  .card img {
+    width: 100%;
+    border-radius: 12px;
+    margin-left: 20px;
+    float: right;
+  }
 }
 
 .card h2 {

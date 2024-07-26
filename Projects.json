@@ -14,7 +14,7 @@
         {
             "title":"MyDyson app - Dyson OnTrac",
             "date":"April 2022 - January 2024",
-            "description":"Leading the design for the connected experience for Dyson's second pair of headphones. Worked against tight project timelines and proposed a phased app delivery to senior stakeholders in order to meet the product launch. Analysing feedback and usage data from Dyson Zone users to create a more engaging experience. Collaborating closely with design system team to establish key cross category experiences, such as alert formats. As part of the role, I've supported the growth of our design team by helping onboard new starters.",
+            "description":"Leading the design for the connected experience for Dyson's second pair of headphones. Worked against tight project timelines and proposed a phased app delivery to senior stakeholders in order to meet the product launch. Analysing feedback and usage data from Dyson Zone users to create a more engaging experience. Collaborating closely with our design system team to establish key cross category experiences, such as alert formats. As part of the role, I've supported the growth of our design team by helping onboard new starters.",
             "roles":"Connected Experience Designer, UI Design",
             "client":"Dyson",
             "images":"dysonontrac.jpg",
@@ -48,7 +48,7 @@
         {
             "title":"The Burning Reef",
             "date":"September 2020 - June 2021",
-            "description":"My final project dissertation for (Bsc) Digital Media at UWE. An interactive narative driven audio-visual experience for the web, generated using Three.JS to procedurally generate in WebGL the dynamic environment. The project is an exploration into the effects of a dynamic ambience meant to demonstrate the effects of ocean degradation and elicit and emotional response while they explore and collect artefacts related to the causes of the degradation. Effectiveness of the project was confirmed by qualitative and quantitative user research.",
+            "description":"My final project dissertation for Digital Media at UWE. An interactive narative driven audio-visual experience for the web, generated using Three.JS to procedurally generate the dynamic environment. The project is an exploration into the effects of a dynamic ambience that demonstrates the effects of ocean degradation to elicit an emotional response while the user explores and collects artefacts related to the main causes of the degradation. Effectiveness of the project was validated by qualitative user research and testing.",
             "roles":"Javascript Developer, 3D Artist, User Experience Designer",
             "client":"Self Led",
             "images":"burningreef.gif",
@@ -87,10 +87,10 @@
         {
             "title":"SAM-APP for Anxiety",
             "date":"July 2020 - October 2020",
-            "description":"Creating short animations in CSS and the Adobe Creative Suite that are then implemented into the SAM-App, ensuring compatibility while following the brand styling guidelines of the app, which is designed to encourage positive mental health habits.",
+            "description":"Creating short animations in CSS and the Adobe Creative Suite that are then implemented into the SAM-App, ensuring compatibility while following the brand styling guidelines of the app, which is designed to encourage positive mental health habits. Using JavaScript, HTML and CSS to develop multiple short interactive animated app pages and minigames that can be used for meditation and unwinding mental fatigue.",
             "roles":"2D Motion designer for Mobile",
-            "client":"SAM",
-            "images":"samapp.gif",
+            "client":"CodeWest",
+            "images":"meditativetool.gif",
             "linkURL":"https://sam-app.org.uk/",
             "importance":0.4,
             "topic":"des"
@@ -171,34 +171,11 @@
             "title":"Backscatter Remover",
             "date":"May 2019 - September 2019",
             "description":"Using Photoshop to create a dataset for a machine learning algorithm. Also, creation of accompanying documents and website that would allow for the submission of multiple new images to the machine learning software, website deployment currently uses seperate untrained machine learning algorithm as proof of concept.",
-            "roles":"Web Developer, Artworker, Creative",
+            "roles":"Web Developer, Artworker, Machine learning",
             "client":"Simon Emberton",
             "images":"backscatter.png",
             "linkGIT":"https://github.com/alexrehopkins/Backscatter",
             "importance":0.15,
-            "topic":"dev"
-        },
-        {
-            "title":"Meditative tools",
-            "date":"October 2019 - February 2020",
-            "description":"Using JavaScript, HTML and CSS to develop multiple short interactive animated app pages and minigames that can be used for meditation and unwinding mental fatigue.",
-            "roles":"Javascript Developer, Frontend",
-            "client":"CodeWest",
-            "images":"meditativetool.gif",
-            "linkURL":"https://www.codewest.uk/",
-            "importance":0.5,
-            "topic":"dev"
-        },
-        {
-            "title":"Swerve",
-            "date":"January 2020 - June 2020",
-            "description":"A data visualisation group collaboration project led by me where I pitched an idea to a panel of creatives to build a team to create the project, aiming to collect data from users of their beliefs regarding the trolley problem scenarios and collate the results as a whole.",
-            "roles":"Backend (NodeJS/SocketIO), Javascript Developer, Creative Director",
-            "client":"Self Led",
-            "images":"swerve.png",
-            "linkDOC":"https://drive.google.com/file/d/1DppTrzG24eR0qnjlYhabPoC4vN08WBVo/view?usp=sharing",
-            "linkURL":"https://swerve-cwd.glitch.me/",
-            "importance":0.1,
             "topic":"dev"
         },
         {

@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap" rel="stylesheet" type='text/css'>
   </head>
   <body>
+	<div class="circle"></div>
     <div class="backg"></div>
 
     <div class="cont">
@@ -22,10 +23,10 @@
             <h1 style="animation: 4s ease 0s 1 slidein;">And I t<span class="coolo">u</span>rn complex problems into</h1>
             <h1 style="animation: 6s ease 0s 1 slidein;">satisfy<span class="coolo">i</span>ng <span class="coolo">design</span> solutions.</span></h1>
         </div>
-        <div style="padding-top: 10%;"></div>
+        <div style="padding-top: 15%;"></div>
         <div class="row">
 			<h3>Get in touch <a href="https://www.linkedin.com/in/ahop/">here.</a></h3>
-        	<h2>Currently working at Dyson as a Senior Connected Experience Designer,</h2>
+        	<h2>Senior Connected Experience Designer @ <a href="https://www.dyson.co.uk/app">Dyson</a></h2>
         	<h4>Backed by 3 years of experience delivering UX/UI projects and a passion for motion and code. </h4>
         </div>
 		<div style="padding-top: 10%;"></div>
@@ -37,6 +38,23 @@
 		
 	
     <script>
+
+		var circle = document.querySelector('.circle');
+
+		function moveCircle(e) {
+			if((!('ontouchstart' in window))) {
+				circle.style.left = e.screenX + 'px';
+				circle.style.top = e.screenY-90 + 'px';
+			}
+		}
+
+		window.addEventListener('mousemove', moveCircle);
+		window.addEventListener('scroll', moveCircle);
+
+
+
+
+
 		let data;
 		init();
       
@@ -88,6 +106,7 @@
 		newImg.src = "pics/"+data.experience[num].images;
 		newDiv.appendChild(newImg);
 
+		createElementer("p",data.experience[num].date,"date",newDiv,"noMaterialIcon");
 		createElementer("h2",data.experience[num].title,"title",newDiv,"noMaterialIcon");
 		createElementer("p",data.experience[num].description,"descr",newDiv,"noMaterialIcon");
 		createElementer("h3",data.experience[num].roles,"roles",newDiv,"noMaterialIcon");
